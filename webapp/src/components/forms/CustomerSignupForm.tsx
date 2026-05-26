@@ -116,7 +116,7 @@ export function CustomerSignupForm({ customerType }: Props) {
         if (error) throw error;
 
         await supabase.from("notifications_outbox").insert({
-          recipient: "support@dashtrashtx.com",
+          recipient: "sales@dashtrashtx.com",
           subject: `New ${customerType} signup: ${values.full_name}`,
           body: `${values.full_name} (${values.email}, ${values.phone}) signed up for ${customerType} at ${fullAddress}. Pickup day: ${values.pickup_day || "n/a"}. Bins: ${values.num_bins}. Properties: ${values.num_properties}. Notes: ${values.notes || "none"}.`,
           template: "new_customer_signup",
@@ -159,7 +159,7 @@ export function CustomerSignupForm({ customerType }: Props) {
       if (error) throw error;
 
       await supabase.from("notifications_outbox").insert({
-        recipient: "support@dashtrashtx.com",
+        recipient: "sales@dashtrashtx.com",
         subject: newCount >= threshold ? `🚨 Cluster READY in ${clusterKey} (${newCount} signups)` : `New waitlist signup in ${clusterKey} (${newCount}/${threshold})`,
         body: `${values.full_name} (${values.email}, ${values.phone}) joined the waitlist at ${fullAddress}. Cluster ${clusterKey} now has ${newCount}/${threshold} homes. Distance from nearest service area: ${minDistance.toFixed(1)} mi.`,
         template: newCount >= threshold ? "cluster_ready" : "waitlist_signup",

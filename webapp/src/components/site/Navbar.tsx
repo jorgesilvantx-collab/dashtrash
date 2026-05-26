@@ -1,7 +1,8 @@
 import { Link, useNavigate } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Phone } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Logo } from "@/components/site/Logo";
 import { cn } from "@/lib/utils";
 
 const links = [
@@ -9,6 +10,7 @@ const links = [
   { to: "/#services", label: "Services" },
   { to: "/#pricing", label: "Pricing" },
   { to: "/#coverage", label: "Coverage" },
+  { to: "/partners", label: "Partners" },
   { to: "/careers", label: "Careers" },
 ];
 
@@ -20,7 +22,7 @@ export function Navbar() {
     <header className="sticky top-0 z-50 backdrop-blur-xl bg-background/85 hairline-bottom">
       <div className="container flex items-center justify-between h-16 md:h-20">
         <Link to="/" className="flex items-center gap-2.5 group">
-          <img src="/brand/logo.jpg" alt="DashTrashTX" className="h-9 w-9 md:h-10 md:w-10 rounded-lg object-cover ring-1 ring-foreground/10 group-hover:ring-primary/60 transition" />
+          <Logo size={40} className="md:[width:44px] md:[height:44px] transition group-hover:rotate-[-3deg]" />
           <span className="font-display font-extrabold text-lg md:text-xl tracking-tight text-ink">
             DashTrash<span className="text-primary">TX</span>
           </span>
@@ -35,6 +37,10 @@ export function Navbar() {
         </nav>
 
         <div className="hidden lg:flex items-center gap-2">
+          <a href="tel:+16823625847" className="hidden xl:inline-flex items-center gap-1.5 text-sm font-semibold text-foreground/80 hover:text-ink mr-2 px-2">
+            <Phone className="h-3.5 w-3.5" />
+            (682) 362-5847
+          </a>
           <Button variant="ghost" size="sm" onClick={() => navigate("/login")} className="text-foreground/80 font-semibold rounded-xl">
             Sign in
           </Button>
@@ -55,6 +61,10 @@ export function Navbar() {
               {l.label}
             </a>
           ))}
+          <a href="tel:+16823625847" className="flex items-center gap-2 py-2 text-ink font-semibold">
+            <Phone className="h-4 w-4 text-primary" />
+            (682) 362-5847
+          </a>
           <div className="flex gap-2 pt-2">
             <Button variant="outline" className="flex-1 rounded-xl" onClick={() => { setOpen(false); navigate("/login"); }}>Sign in</Button>
             <Button className="flex-1 bg-primary text-primary-foreground rounded-xl" onClick={() => { setOpen(false); navigate("/signup"); }}>Start service</Button>

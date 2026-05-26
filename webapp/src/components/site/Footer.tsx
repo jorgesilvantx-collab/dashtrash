@@ -1,4 +1,6 @@
 import { Link } from "react-router-dom";
+import { Phone, Mail } from "lucide-react";
+import { Logo } from "@/components/site/Logo";
 
 export function Footer() {
   return (
@@ -7,7 +9,7 @@ export function Footer() {
         <div className="grid md:grid-cols-12 gap-10 md:gap-6">
           <div className="md:col-span-5">
             <Link to="/" className="flex items-center gap-2.5">
-              <img src="/brand/logo.jpg" alt="DashTrashTX" className="h-10 w-10 rounded-lg object-cover ring-1 ring-foreground/10" />
+              <Logo size={44} />
               <span className="font-display font-extrabold text-xl tracking-tight text-ink">
                 DashTrash<span className="text-primary">TX</span>
               </span>
@@ -15,6 +17,20 @@ export function Footer() {
             <p className="mt-5 max-w-sm text-[0.95rem] text-muted-foreground leading-relaxed">
               The white-glove trash bin valet for Dallas–Fort Worth homes, properties, and seniors. Bins out the night before, back the day after — every week.
             </p>
+            <div className="mt-6 space-y-2 text-sm">
+              <a href="tel:+16823625847" className="flex items-center gap-2 text-ink font-semibold hover:text-primary transition-colors">
+                <Phone className="h-4 w-4 text-primary" />
+                (682) 362-5847
+              </a>
+              <a href="mailto:sales@dashtrashtx.com" className="flex items-center gap-2 text-foreground/80 hover:text-ink transition-colors">
+                <Mail className="h-4 w-4 text-muted-foreground" />
+                sales@dashtrashtx.com
+              </a>
+              <a href="mailto:support@dashtrashtx.com" className="flex items-center gap-2 text-foreground/80 hover:text-ink transition-colors">
+                <Mail className="h-4 w-4 text-muted-foreground" />
+                support@dashtrashtx.com
+              </a>
+            </div>
           </div>
 
           <FooterCol title="Service" links={[
@@ -24,6 +40,7 @@ export function Footer() {
             { to: "/waitlist", label: "Waitlist" },
           ]} />
           <FooterCol title="Company" links={[
+            { to: "/partners", label: "Partners" },
             { to: "/careers", label: "Careers" },
             { to: "/#how", label: "How it works" },
             { to: "/#pricing", label: "Pricing" },
@@ -33,7 +50,7 @@ export function Footer() {
             { to: "/login", label: "Customer sign in" },
             { to: "/login?role=driver", label: "Driver sign in" },
             { to: "/login?role=admin", label: "Dispatch" },
-            { to: "mailto:support@dashtrashtx.com", label: "support@dashtrashtx.com", external: true },
+            { to: "mailto:sales@dashtrashtx.com", label: "sales@dashtrashtx.com", external: true },
           ]} />
         </div>
 

@@ -3,6 +3,7 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import { LogOut, Menu, X } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Logo } from "@/components/site/Logo";
 import { useAuth } from "@/lib/auth";
 import { cn } from "@/lib/utils";
 
@@ -32,7 +33,7 @@ export function PortalShell({
         <div className="container flex items-center justify-between h-16">
           <div className="flex items-center gap-6">
             <Link to="/" className="flex items-center gap-2.5">
-              <img src="/brand/logo.jpg" alt="DashTrashTX" className="h-9 w-9 rounded-lg object-cover ring-1 ring-foreground/10" />
+              <Logo size={36} />
               <span className="font-display font-extrabold text-lg tracking-tight text-ink hidden sm:inline">
                 DashTrash<span className="text-primary">TX</span>
               </span>

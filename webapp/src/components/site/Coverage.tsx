@@ -53,8 +53,8 @@ export function Coverage() {
           <div className="relative">
             <div className="relative aspect-square rounded-[28px] overflow-hidden bg-white ring-soft border border-border">
               <img
-                src="https://images.unsplash.com/photo-1604357209793-fca5dca89f97?auto=format&fit=crop&w=1400&q=80"
-                alt="DFW neighborhood at dusk"
+                src="https://images.unsplash.com/photo-1564281312-9cef0b1b8c3a?auto=format&fit=crop&w=1400&q=80"
+                alt="Texas HOA neighborhood streetscape — DashTrashTX coverage area"
                 className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-ink/40 via-transparent" />
