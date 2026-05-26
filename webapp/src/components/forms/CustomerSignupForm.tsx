@@ -175,13 +175,21 @@ export function CustomerSignupForm({ customerType }: Props) {
 
   if (result.kind === "in_area") {
     return (
-      <div className="text-center py-10 px-6 rounded-2xl bg-card border border-primary/30 ring-glow">
-        <CheckCircle2 className="h-12 w-12 text-primary mx-auto mb-4" />
-        <h3 className="font-display text-3xl mb-2">You're in. Welcome.</h3>
-        <p className="text-muted-foreground max-w-md mx-auto mb-6">
+      <div className="text-center py-10 px-6 animate-fade-up">
+        <div className="h-14 w-14 rounded-2xl bg-primary/20 flex items-center justify-center mx-auto mb-5">
+          <CheckCircle2 className="h-7 w-7 text-ink" strokeWidth={2} />
+        </div>
+        <h3 className="font-display font-extrabold text-3xl md:text-4xl text-ink mb-3">You're in. Welcome.</h3>
+        <p className="text-muted-foreground max-w-md mx-auto mb-8 leading-relaxed">
           Your address is inside our service area. We've sent a confirmation to your email and our team will reach out within 24 hours to schedule your first pickup and complete checkout.
         </p>
-        <Button onClick={() => navigate("/")} className="bg-primary text-primary-foreground">Back to home</Button>
+        <Button
+          onClick={() => navigate("/")}
+          size="lg"
+          className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-2xl px-7 font-semibold"
+        >
+          Back to home
+        </Button>
       </div>
     );
   }
@@ -189,22 +197,30 @@ export function CustomerSignupForm({ customerType }: Props) {
   if (result.kind === "waitlisted") {
     const pct = Math.min(100, Math.round((result.clusterCount / result.threshold) * 100));
     return (
-      <div className="text-center py-10 px-6 rounded-2xl bg-card border border-accent/40">
-        <MapPinned className="h-12 w-12 text-accent mx-auto mb-4" />
-        <h3 className="font-display text-3xl mb-2">You're on the waitlist.</h3>
-        <p className="text-muted-foreground max-w-md mx-auto mb-6">
-          Your address is about <span className="text-foreground">{result.distanceMiles.toFixed(1)} mi</span> outside our current route. We'll open service to your area when 25+ homes sign up nearby — and you'll be among the first notified.
+      <div className="text-center py-10 px-6 animate-fade-up">
+        <div className="h-14 w-14 rounded-2xl bg-accent/20 flex items-center justify-center mx-auto mb-5">
+          <MapPinned className="h-7 w-7 text-ink" strokeWidth={1.75} />
+        </div>
+        <h3 className="font-display font-extrabold text-3xl md:text-4xl text-ink mb-3">You're on the waitlist.</h3>
+        <p className="text-muted-foreground max-w-md mx-auto mb-8 leading-relaxed">
+          Your address is about <span className="text-ink font-semibold">{result.distanceMiles.toFixed(1)} mi</span> outside our current route. We'll open service to your area when 25+ homes sign up nearby — and you'll be among the first notified.
         </p>
         <div className="max-w-sm mx-auto">
-          <div className="flex justify-between text-xs text-muted-foreground mb-1.5">
+          <div className="flex justify-between text-xs text-muted-foreground mb-2 font-mono-eyebrow">
             <span>Your area</span>
             <span>{result.clusterCount} / {result.threshold} homes</span>
           </div>
           <div className="h-2 rounded-full bg-secondary overflow-hidden">
-            <div className="h-full bg-accent transition-all" style={{ width: `${pct}%` }} />
+            <div className="h-full bg-primary transition-all" style={{ width: `${pct}%` }} />
           </div>
         </div>
-        <Button onClick={() => navigate("/")} className="mt-8 bg-primary text-primary-foreground">Back to home</Button>
+        <Button
+          onClick={() => navigate("/")}
+          size="lg"
+          className="mt-10 bg-primary text-primary-foreground hover:bg-primary/90 rounded-2xl px-7 font-semibold"
+        >
+          Back to home
+        </Button>
       </div>
     );
   }
@@ -347,7 +363,7 @@ export function CustomerSignupForm({ customerType }: Props) {
         </div>
 
         {customerType === "elderly" ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-5 rounded-xl bg-secondary/40 border border-border/60">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-5 rounded-2xl bg-cream border border-border">
             <FormField
               control={form.control}
               name="insurance_provider"
@@ -386,7 +402,7 @@ export function CustomerSignupForm({ customerType }: Props) {
         />
 
         {result.kind === "error" ? (
-          <div className="flex items-start gap-2 p-3 rounded-lg bg-destructive/10 border border-destructive/40 text-destructive text-sm">
+          <div className="flex items-start gap-2 p-3 rounded-xl bg-destructive/10 border border-destructive/40 text-destructive text-sm">
             <AlertCircle className="h-4 w-4 mt-0.5 flex-shrink-0" />
             <span>{result.message}</span>
           </div>
@@ -396,9 +412,9 @@ export function CustomerSignupForm({ customerType }: Props) {
           type="submit"
           size="lg"
           disabled={result.kind === "submitting"}
-          className="w-full h-12 bg-primary text-primary-foreground hover:bg-primary/90"
+          className="w-full h-12 bg-primary text-primary-foreground hover:bg-primary/90 rounded-2xl font-semibold"
         >
-          {result.kind === "submitting" ? <><Loader2 className="h-4 w-4 mr-2 animate-spin" /> Checking your area...</> : "Submit & check service area"}
+          {result.kind === "submitting" ? <><Loader2 className="h-4 w-4 mr-2 animate-spin" /> Checking your area…</> : "Submit & check service area"}
         </Button>
         <p className="text-xs text-muted-foreground text-center">
           We'll never share your info. By submitting you agree to be contacted at the phone & email above.

@@ -13,20 +13,36 @@ const faqs = [
 
 export function FAQ() {
   return (
-    <section id="faq" className="relative py-24 md:py-32 border-t border-border/60">
+    <section id="faq" className="relative py-24 md:py-32 bg-cream">
       <div className="container">
         <div className="grid lg:grid-cols-12 gap-12 lg:gap-20">
           <div className="lg:col-span-4">
-            <div className="text-xs font-medium tracking-[0.2em] uppercase text-primary mb-4">FAQ</div>
-            <h2 className="font-display text-4xl md:text-5xl tracking-tight text-balance">Common questions, plainly answered.</h2>
-            <p className="mt-4 text-muted-foreground">Don't see yours? Email <a className="text-primary hover:underline" href="mailto:support@dashtrashtx.com">support@dashtrashtx.com</a> and we'll get back same day.</p>
+            <div className="font-mono-eyebrow text-muted-foreground mb-4">FAQ</div>
+            <h2 className="font-display font-extrabold text-4xl md:text-5xl tracking-tight text-balance text-ink">
+              Common questions, <span className="text-primary">plainly answered</span>.
+            </h2>
+            <p className="mt-5 text-muted-foreground leading-relaxed">
+              Don't see yours? Email{" "}
+              <a className="text-ink font-semibold underline underline-offset-2 hover:text-primary" href="mailto:support@dashtrashtx.com">
+                support@dashtrashtx.com
+              </a>{" "}
+              and we'll get back the same day.
+            </p>
           </div>
           <div className="lg:col-span-8">
-            <Accordion type="single" collapsible className="space-y-2">
+            <Accordion type="single" collapsible className="space-y-3">
               {faqs.map((f, i) => (
-                <AccordionItem key={i} value={`q${i}`} className="rounded-xl border border-border/60 bg-card px-5">
-                  <AccordionTrigger className="text-left font-display text-lg hover:no-underline">{f.q}</AccordionTrigger>
-                  <AccordionContent className="text-muted-foreground leading-relaxed">{f.a}</AccordionContent>
+                <AccordionItem
+                  key={i}
+                  value={`q${i}`}
+                  className="rounded-2xl border border-border bg-white px-6 data-[state=open]:border-foreground/15"
+                >
+                  <AccordionTrigger className="text-left font-display font-bold text-lg md:text-xl text-ink hover:no-underline py-5">
+                    {f.q}
+                  </AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground leading-relaxed text-[0.95rem] pb-5">
+                    {f.a}
+                  </AccordionContent>
                 </AccordionItem>
               ))}
             </Accordion>

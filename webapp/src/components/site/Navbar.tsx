@@ -17,28 +17,28 @@ export function Navbar() {
   const navigate = useNavigate();
 
   return (
-    <header className="sticky top-0 z-50 backdrop-blur-xl bg-background/70 border-b border-border/60">
+    <header className="sticky top-0 z-50 backdrop-blur-xl bg-background/85 hairline-bottom">
       <div className="container flex items-center justify-between h-16 md:h-20">
         <Link to="/" className="flex items-center gap-2.5 group">
-          <img src="/brand/logo.jpg" alt="DashTrashTX" className="h-9 w-9 md:h-10 md:w-10 rounded-md object-cover ring-1 ring-primary/30 group-hover:ring-primary/60 transition" />
-          <span className="font-display text-lg md:text-xl tracking-tight">
+          <img src="/brand/logo.jpg" alt="DashTrashTX" className="h-9 w-9 md:h-10 md:w-10 rounded-lg object-cover ring-1 ring-foreground/10 group-hover:ring-primary/60 transition" />
+          <span className="font-display font-extrabold text-lg md:text-xl tracking-tight text-ink">
             DashTrash<span className="text-primary">TX</span>
           </span>
         </Link>
 
-        <nav className="hidden lg:flex items-center gap-8">
+        <nav className="hidden lg:flex items-center gap-9">
           {links.map((l) => (
-            <a key={l.to} href={l.to} className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            <a key={l.to} href={l.to} className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
               {l.label}
             </a>
           ))}
         </nav>
 
-        <div className="hidden lg:flex items-center gap-3">
-          <Button variant="ghost" size="sm" onClick={() => navigate("/login")} className="text-foreground/80">
+        <div className="hidden lg:flex items-center gap-2">
+          <Button variant="ghost" size="sm" onClick={() => navigate("/login")} className="text-foreground/80 font-semibold rounded-xl">
             Sign in
           </Button>
-          <Button size="sm" onClick={() => navigate("/signup")} className="bg-primary text-primary-foreground hover:bg-primary/90">
+          <Button size="sm" onClick={() => navigate("/signup")} className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-xl h-10 px-5 font-semibold">
             Start service
           </Button>
         </div>
@@ -48,16 +48,16 @@ export function Navbar() {
         </button>
       </div>
 
-      <div className={cn("lg:hidden overflow-hidden transition-[max-height] duration-300 border-t border-border/60", open ? "max-h-96" : "max-h-0")}>
-        <div className="container py-4 flex flex-col gap-3">
+      <div className={cn("lg:hidden overflow-hidden transition-[max-height] duration-300 border-t border-border", open ? "max-h-96" : "max-h-0")}>
+        <div className="container py-4 flex flex-col gap-3 bg-background">
           {links.map((l) => (
-            <a key={l.to} href={l.to} onClick={() => setOpen(false)} className="py-2 text-foreground/90">
+            <a key={l.to} href={l.to} onClick={() => setOpen(false)} className="py-2 text-foreground/90 font-medium">
               {l.label}
             </a>
           ))}
           <div className="flex gap-2 pt-2">
-            <Button variant="outline" className="flex-1" onClick={() => { setOpen(false); navigate("/login"); }}>Sign in</Button>
-            <Button className="flex-1 bg-primary text-primary-foreground" onClick={() => { setOpen(false); navigate("/signup"); }}>Start service</Button>
+            <Button variant="outline" className="flex-1 rounded-xl" onClick={() => { setOpen(false); navigate("/login"); }}>Sign in</Button>
+            <Button className="flex-1 bg-primary text-primary-foreground rounded-xl" onClick={() => { setOpen(false); navigate("/signup"); }}>Start service</Button>
           </div>
         </div>
       </div>

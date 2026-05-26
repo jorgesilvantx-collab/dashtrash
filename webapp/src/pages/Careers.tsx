@@ -85,12 +85,22 @@ export default function Careers() {
   if (state === "done") {
     return (
       <PageShell>
-        <section className="container py-24 md:py-32">
-          <div className="max-w-xl mx-auto text-center p-10 rounded-2xl bg-card border border-primary/30 ring-glow">
-            <CheckCircle2 className="h-12 w-12 text-primary mx-auto mb-4" />
-            <h1 className="font-display text-4xl mb-3">Application received.</h1>
-            <p className="text-muted-foreground mb-8">We review every application within 48 hours. If you're a fit, we'll reach out to schedule a quick call and a ride-along.</p>
-            <Button onClick={() => navigate("/")} className="bg-primary text-primary-foreground">Back to home</Button>
+        <section className="container py-24 md:py-32 bg-background">
+          <div className="max-w-xl mx-auto text-center p-10 rounded-3xl bg-white border border-border ring-soft animate-fade-up">
+            <div className="h-14 w-14 rounded-2xl bg-primary/20 flex items-center justify-center mx-auto mb-6">
+              <CheckCircle2 className="h-7 w-7 text-ink" strokeWidth={2} />
+            </div>
+            <h1 className="font-display font-extrabold text-3xl md:text-4xl text-ink mb-3">Application received.</h1>
+            <p className="text-muted-foreground mb-8 leading-relaxed">
+              We review every application within 48 hours. If you're a fit, we'll reach out to schedule a quick call and a ride-along.
+            </p>
+            <Button
+              onClick={() => navigate("/")}
+              size="lg"
+              className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-2xl px-7 font-semibold"
+            >
+              Back to home
+            </Button>
           </div>
         </section>
       </PageShell>
@@ -99,16 +109,17 @@ export default function Careers() {
 
   return (
     <PageShell>
-      <section className="relative">
-        <div className="absolute inset-0 grid-lines opacity-30 pointer-events-none" />
-        <div className="absolute -top-10 -left-32 h-[420px] w-[420px] rounded-full bg-primary/15 blur-[110px] pointer-events-none" />
+      <section className="relative bg-background overflow-hidden">
+        <div className="absolute inset-x-0 top-0 h-[500px] bg-dots opacity-30 pointer-events-none [mask-image:radial-gradient(ellipse_at_top,black_20%,transparent_70%)]" />
         <div className="container relative py-16 md:py-24">
           <div className="max-w-3xl mx-auto">
-            <div className="text-center mb-10">
-              <div className="text-xs font-medium tracking-[0.2em] uppercase text-primary mb-3">Careers</div>
-              <h1 className="font-display text-4xl md:text-6xl tracking-tight text-balance">Drive with DashTrashTX.</h1>
-              <p className="mt-4 text-muted-foreground max-w-xl mx-auto">
-                Earn weekly. Choose your routes. Be home before the kids wake up. We're hiring drivers and dispatchers across Texas.
+            <div className="text-center mb-12 animate-fade-up">
+              <div className="font-mono-eyebrow text-muted-foreground mb-4">Careers</div>
+              <h1 className="font-display font-extrabold text-4xl md:text-6xl tracking-tight text-balance text-ink">
+                Drive with <span className="text-primary">DashTrashTX</span>.
+              </h1>
+              <p className="mt-5 text-lg text-muted-foreground max-w-xl mx-auto leading-relaxed">
+                Earn weekly. Choose your routes. Be home before the kids wake up. We're hiring drivers and dispatchers across DFW.
               </p>
             </div>
 
@@ -118,7 +129,7 @@ export default function Careers() {
               <Perk icon={Truck} title="Use your own vehicle" subtitle="Truck, SUV, or van" />
             </div>
 
-            <div className="p-6 md:p-8 rounded-2xl bg-card border border-border/60">
+            <div className="p-7 md:p-10 rounded-3xl bg-white border border-border ring-soft">
               <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -134,7 +145,7 @@ export default function Careers() {
                   )} />
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     <FormField control={form.control} name="city" render={({ field }) => (
-                      <FormItem className="sm:col-span-2"><FormLabel>City</FormLabel><FormControl><Input placeholder="Austin" {...field} /></FormControl><FormMessage /></FormItem>
+                      <FormItem className="sm:col-span-2"><FormLabel>City</FormLabel><FormControl><Input placeholder="Plano" {...field} /></FormControl><FormMessage /></FormItem>
                     )} />
                     <FormField control={form.control} name="state" render={({ field }) => (
                       <FormItem><FormLabel>State</FormLabel><FormControl><Input maxLength={2} {...field} /></FormControl><FormMessage /></FormItem>
@@ -180,14 +191,19 @@ export default function Careers() {
                   )} />
 
                   {state === "error" && err ? (
-                    <div className="flex items-start gap-2 p-3 rounded-lg bg-destructive/10 border border-destructive/40 text-destructive text-sm">
+                    <div className="flex items-start gap-2 p-3 rounded-xl bg-destructive/10 border border-destructive/40 text-destructive text-sm">
                       <AlertCircle className="h-4 w-4 mt-0.5 flex-shrink-0" />
                       <span>{err}</span>
                     </div>
                   ) : null}
 
-                  <Button type="submit" size="lg" disabled={state === "submitting"} className="w-full h-12 bg-primary text-primary-foreground hover:bg-primary/90">
-                    {state === "submitting" ? <><Loader2 className="h-4 w-4 mr-2 animate-spin" /> Submitting...</> : "Submit application"}
+                  <Button
+                    type="submit"
+                    size="lg"
+                    disabled={state === "submitting"}
+                    className="w-full h-12 bg-primary text-primary-foreground hover:bg-primary/90 rounded-2xl font-semibold"
+                  >
+                    {state === "submitting" ? <><Loader2 className="h-4 w-4 mr-2 animate-spin" /> Submitting…</> : "Submit application"}
                   </Button>
                 </form>
               </Form>
@@ -201,11 +217,13 @@ export default function Careers() {
 
 function Perk({ icon: Icon, title, subtitle }: { icon: typeof DollarSign; title: string; subtitle: string }) {
   return (
-    <div className="p-4 rounded-xl bg-card border border-border/60 flex items-start gap-3">
-      <Icon className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" strokeWidth={1.5} />
+    <div className="p-5 rounded-2xl bg-white border border-border flex items-start gap-3">
+      <div className="h-9 w-9 rounded-xl bg-primary/15 flex items-center justify-center flex-shrink-0">
+        <Icon className="h-4.5 w-4.5 text-ink" strokeWidth={1.75} />
+      </div>
       <div>
-        <div className="font-medium text-sm">{title}</div>
-        <div className="text-xs text-muted-foreground mt-0.5">{subtitle}</div>
+        <div className="font-display font-bold text-ink leading-tight">{title}</div>
+        <div className="text-xs text-muted-foreground mt-1">{subtitle}</div>
       </div>
     </div>
   );
