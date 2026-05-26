@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Phone, Mail } from "lucide-react";
-import { Logo } from "@/components/site/Logo";
+import { LogoTile } from "@/components/site/Logo";
 
 export function Footer() {
   return (
@@ -9,7 +9,7 @@ export function Footer() {
         <div className="grid md:grid-cols-12 gap-10 md:gap-6">
           <div className="md:col-span-5">
             <Link to="/" className="flex items-center gap-2.5">
-              <Logo size={44} />
+              <LogoTile size={44} />
               <span className="font-display font-extrabold text-xl tracking-tight text-ink">
                 DashTrash<span className="text-primary">TX</span>
               </span>

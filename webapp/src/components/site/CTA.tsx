@@ -11,13 +11,17 @@ export function CTA() {
           <div className="absolute -bottom-40 -left-40 h-96 w-96 rounded-full bg-[#FF7F65]/20 blur-[140px]" />
           <div className="absolute inset-0 bg-dots opacity-[0.06] [mask-image:radial-gradient(ellipse_at_center,black,transparent_70%)]" />
 
-          {/* Trash-bin photo strip on the right */}
-          <div className="absolute right-0 top-0 bottom-0 w-1/3 hidden lg:block opacity-30 [mask-image:linear-gradient(to_left,black_30%,transparent_100%)]">
-            <img
-              src="https://images.unsplash.com/photo-1611284446314-60a58ac0deb9?auto=format&fit=crop&w=900&q=80"
-              alt=""
-              className="w-full h-full object-cover"
-            />
+          {/* Diagonal cyan stripes — Uber-style decorative motion */}
+          <div className="absolute inset-0 opacity-[0.06] pointer-events-none [mask-image:linear-gradient(to_left,black_10%,transparent_70%)]">
+            <svg className="w-full h-full" viewBox="0 0 600 400" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+              <g transform="rotate(-25 300 200)">
+                <rect x="-100" y="40" width="900" height="14" fill="#5EE3E3" />
+                <rect x="-100" y="100" width="900" height="14" fill="#5EE3E3" />
+                <rect x="-100" y="160" width="900" height="14" fill="#5EE3E3" />
+                <rect x="-100" y="220" width="900" height="14" fill="#5EE3E3" />
+                <rect x="-100" y="280" width="900" height="14" fill="#5EE3E3" />
+              </g>
+            </svg>
           </div>
 
           <div className="relative grid lg:grid-cols-12 gap-10 items-center">

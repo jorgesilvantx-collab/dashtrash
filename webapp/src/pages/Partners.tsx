@@ -138,23 +138,42 @@ export default function Partners() {
 
             <div className="lg:col-span-5 animate-fade-up delay-150">
               <div className="relative aspect-[4/5] max-w-[440px] mx-auto">
-                <div className="absolute inset-0 rounded-[32px] overflow-hidden bg-white ring-soft border border-border shadow-[0_30px_60px_-20px_rgba(15,23,34,0.35)]">
-                  <img
-                    src="https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?auto=format&fit=crop&w=1200&q=80"
-                    alt="Caregiver helping senior at home — DashTrashTX elderly bin valet"
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-ink/40 via-transparent" />
-                  <div className="absolute bottom-5 left-5 right-5 p-4 rounded-2xl bg-background/95 backdrop-blur-xl hairline">
-                    <div className="font-mono-eyebrow text-muted-foreground mb-1">Often covered</div>
-                    <div className="font-display font-bold text-ink leading-tight">Long-term care insurance</div>
-                    <div className="text-xs text-muted-foreground mt-1.5">We handle the billing paperwork.</div>
+                <div className="absolute inset-0 rounded-[32px] overflow-hidden bg-ink ring-soft border border-border shadow-[0_30px_60px_-20px_rgba(15,23,34,0.35)]">
+                  <div className="absolute -top-16 -right-16 h-60 w-60 rounded-full bg-primary/30 blur-[100px]" />
+                  <div className="absolute -bottom-16 -left-16 h-60 w-60 rounded-full bg-[#FF7F65]/20 blur-[110px]" />
+
+                  <div className="relative h-full flex flex-col p-8">
+                    <div className="font-mono-eyebrow text-primary/80 mb-3">Partner kit</div>
+                    <h3 className="font-display font-extrabold text-3xl text-background leading-tight mb-5">
+                      Built for caregivers.
+                    </h3>
+
+                    <ul className="space-y-3 mt-2">
+                      {[
+                        "Insurance billing — we do the paperwork",
+                        "Photo proof in your care notes",
+                        "Family text updates after each visit",
+                        "Same valet, same time, every week",
+                      ].map((item) => (
+                        <li key={item} className="flex items-start gap-2.5 text-sm text-background/80">
+                          <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary shrink-0" />
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+
+                    <div className="mt-auto pt-6 border-t border-background/10">
+                      <div className="font-mono-eyebrow text-primary/80 mb-1">Often covered</div>
+                      <div className="font-display font-bold text-background text-lg leading-tight">Long-term care insurance</div>
+                      <div className="text-xs text-background/60 mt-1.5">We handle the billing paperwork.</div>
+                    </div>
                   </div>
                 </div>
-                <div className="absolute -top-4 -right-3 p-3.5 rounded-2xl bg-ink text-background shadow-[0_20px_40px_-15px_rgba(15,23,34,0.5)] rotate-[4deg]">
-                  <div className="font-mono-eyebrow text-primary/80 mb-1">Partner referral</div>
-                  <div className="font-display font-extrabold text-2xl leading-none">$50</div>
-                  <div className="text-xs text-background/60 mt-1">per signed client</div>
+
+                <div className="absolute -top-4 -right-3 p-3.5 rounded-2xl bg-background border border-border shadow-[0_20px_40px_-15px_rgba(15,23,34,0.25)] rotate-[4deg]">
+                  <div className="font-mono-eyebrow text-muted-foreground mb-1">Partner referral</div>
+                  <div className="font-display font-extrabold text-2xl text-ink leading-none">$50</div>
+                  <div className="text-xs text-muted-foreground mt-1">per signed client</div>
                 </div>
               </div>
             </div>

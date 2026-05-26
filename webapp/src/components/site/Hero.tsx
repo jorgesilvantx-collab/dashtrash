@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, ShieldCheck, Camera, Clock, Phone, Trash2 } from "lucide-react";
+import { ArrowRight, ShieldCheck, Camera, Clock, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { RouteCanvas } from "@/components/site/RouteCanvas";
 
 export function Hero() {
   return (
@@ -55,46 +56,13 @@ export function Hero() {
             </div>
           </div>
 
-          {/* Right: Stacked photo collage */}
+          {/* Right: Animated route canvas (no photo) */}
           <div className="lg:col-span-5 relative animate-fade-up delay-150">
             <div className="relative aspect-[4/5] max-w-[480px] mx-auto">
-              {/* Main image — trash bins at curb */}
-              <div className="absolute inset-0 rounded-[32px] overflow-hidden bg-white ring-soft border border-border shadow-[0_30px_60px_-20px_rgba(15,23,34,0.35)]">
-                <img
-                  src="https://images.unsplash.com/photo-1611284446314-60a58ac0deb9?auto=format&fit=crop&w=1400&q=80"
-                  alt="Curbside trash bins ready for pickup — DashTrashTX bin valet service"
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-ink/30 via-transparent to-transparent" />
-
-                {/* Live-status pill */}
-                <div className="absolute top-5 left-5 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-background/95 backdrop-blur-md hairline">
-                  <span className="relative flex h-2 w-2">
-                    <span className="absolute inline-flex h-full w-full rounded-full bg-primary opacity-75 animate-ping" />
-                    <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
-                  </span>
-                  <span className="text-xs font-mono-eyebrow text-ink">On route — 4:42 AM</span>
-                </div>
-
-                {/* Bottom service card */}
-                <div className="absolute bottom-4 left-4 right-4 p-4 rounded-2xl bg-background/95 backdrop-blur-xl hairline">
-                  <div className="flex items-center gap-3">
-                    <div className="h-10 w-10 rounded-xl bg-primary/15 flex items-center justify-center">
-                      <Trash2 className="h-5 w-5 text-ink" strokeWidth={2} />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="font-display font-bold text-ink text-sm leading-tight">Bins returned</div>
-                      <div className="text-xs text-muted-foreground">4128 Oak Ridge Dr · Plano, TX</div>
-                    </div>
-                    <div className="text-right">
-                      <div className="font-mono-eyebrow text-primary">Done</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <RouteCanvas className="absolute inset-0 ring-soft shadow-[0_30px_60px_-20px_rgba(15,23,34,0.35)]" />
 
               {/* Floating stat card */}
-              <div className="absolute -top-6 -right-2 md:-right-8 p-4 rounded-2xl bg-ink text-background shadow-[0_20px_40px_-15px_rgba(15,23,34,0.5)] rotate-[3deg] hidden sm:block">
+              <div className="absolute -top-6 -right-2 md:-right-8 p-4 rounded-2xl bg-ink text-background shadow-[0_20px_40px_-15px_rgba(15,23,34,0.5)] rotate-[3deg] hidden sm:block border border-background/10">
                 <div className="font-mono-eyebrow text-primary/80 mb-1">This week</div>
                 <div className="font-display font-extrabold text-3xl leading-none">2,400</div>
                 <div className="text-xs text-background/60 mt-1">bins handled</div>

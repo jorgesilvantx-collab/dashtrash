@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Menu, X, Phone } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Logo } from "@/components/site/Logo";
+import { LogoTile } from "@/components/site/Logo";
 import { cn } from "@/lib/utils";
 
 const links = [
@@ -22,7 +22,7 @@ export function Navbar() {
     <header className="sticky top-0 z-50 backdrop-blur-xl bg-background/85 hairline-bottom">
       <div className="container flex items-center justify-between h-16 md:h-20">
         <Link to="/" className="flex items-center gap-2.5 group">
-          <Logo size={40} className="md:[width:44px] md:[height:44px] transition group-hover:rotate-[-3deg]" />
+          <LogoTile size={40} className="md:[width:44px] md:[height:44px] transition group-hover:rotate-[-3deg]" />
           <span className="font-display font-extrabold text-lg md:text-xl tracking-tight text-ink">
             DashTrash<span className="text-primary">TX</span>
           </span>

@@ -1,49 +1,75 @@
 import { cn } from "@/lib/utils";
 
-export function Logo({ className, size = 40 }: { className?: string; size?: number }) {
+/**
+ * DashTrashTX D-monogram: bold capital D outline with three diagonal "dash" stripes
+ * cutting through the interior. Uber-style: rugged, minimal, high-contrast.
+ */
+export function Logo({ className, size = 40, dark = false }: { className?: string; size?: number; dark?: boolean }) {
+  const stroke = dark ? "#5EE3E3" : "#5EE3E3";
+  const dashFill = dark ? "#FFFFFF" : "#0F1722";
+  const dashOutline = "#5EE3E3";
+
   return (
     <svg
       width={size}
       height={size}
-      viewBox="0 0 48 48"
+      viewBox="0 0 64 64"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={cn("shrink-0", className)}
       aria-label="DashTrashTX"
       role="img"
     >
-      <defs>
-        <linearGradient id="dtx-bg" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stopColor="#0F1722" />
-          <stop offset="100%" stopColor="#1B2738" />
-        </linearGradient>
-        <linearGradient id="dtx-d" x1="14" y1="10" x2="38" y2="40" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stopColor="#5EE3E3" />
-          <stop offset="100%" stopColor="#3FB8B8" />
-        </linearGradient>
-      </defs>
-
-      {/* Rounded tile */}
-      <rect x="0" y="0" width="48" height="48" rx="12" fill="url(#dtx-bg)" />
-
-      {/* Subtle inner stroke */}
-      <rect x="0.5" y="0.5" width="47" height="47" rx="11.5" stroke="#5EE3E3" strokeOpacity="0.18" />
-
-      {/* Custom D-monogram: thick uppercase D with cyan accent slash */}
+      {/* Bold D outline */}
       <path
-        d="M14 11 H25.5 C32.4036 11 38 16.5964 38 23.5 V24.5 C38 31.4036 32.4036 37 25.5 37 H14 V11 Z"
-        fill="url(#dtx-d)"
+        d="M10 8 H32 C46.3594 8 58 19.6406 58 34 C58 48.3594 46.3594 60 32 60 H10 V8 Z M19 17 V51 H32 C41.3888 51 49 43.3888 49 34 C49 24.6112 41.3888 17 32 17 H19 Z"
+        fill={stroke}
+        stroke={stroke}
+        strokeWidth="0.5"
+        strokeLinejoin="round"
       />
 
-      {/* Inner cutout */}
-      <path
-        d="M20.5 17 H25.5 C29.0899 17 32 19.9101 32 23.5 V24.5 C32 28.0899 29.0899 31 25.5 31 H20.5 V17 Z"
-        fill="#0F1722"
-      />
+      {/* Three diagonal dash stripes cutting through the D */}
+      <g transform="rotate(-22 32 34)">
+        <rect x="6" y="20" width="38" height="5" rx="1" fill={dashFill} stroke={dashOutline} strokeWidth="1.5" />
+        <rect x="6" y="31" width="38" height="5" rx="1" fill={dashFill} stroke={dashOutline} strokeWidth="1.5" />
+        <rect x="6" y="42" width="38" height="5" rx="1" fill={dashFill} stroke={dashOutline} strokeWidth="1.5" />
+      </g>
+    </svg>
+  );
+}
 
-      {/* Coral accent dot — bin indicator */}
-      <circle cx="36" cy="13" r="3" fill="#FF7F65" />
-      <circle cx="36" cy="13" r="1.2" fill="#FFE4DA" />
+/**
+ * Square tile version — for favicon-like contexts (Navbar/PortalShell).
+ * Dark rounded background with the D-monogram in cyan.
+ */
+export function LogoTile({ className, size = 40 }: { className?: string; size?: number }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 64 64"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={cn("shrink-0", className)}
+      aria-label="DashTrashTX"
+      role="img"
+    >
+      <rect x="0" y="0" width="64" height="64" rx="14" fill="#0F1722" />
+      <rect x="0.5" y="0.5" width="63" height="63" rx="13.5" stroke="#5EE3E3" strokeOpacity="0.2" />
+
+      {/* Inner D — scaled down */}
+      <g transform="translate(8 8) scale(0.75)">
+        <path
+          d="M10 8 H32 C46.3594 8 58 19.6406 58 34 C58 48.3594 46.3594 60 32 60 H10 V8 Z M19 17 V51 H32 C41.3888 51 49 43.3888 49 34 C49 24.6112 41.3888 17 32 17 H19 Z"
+          fill="#5EE3E3"
+        />
+        <g transform="rotate(-22 32 34)">
+          <rect x="6" y="20" width="38" height="5" rx="1" fill="#FFFFFF" stroke="#5EE3E3" strokeWidth="1.2" />
+          <rect x="6" y="31" width="38" height="5" rx="1" fill="#FFFFFF" stroke="#5EE3E3" strokeWidth="1.2" />
+          <rect x="6" y="42" width="38" height="5" rx="1" fill="#FFFFFF" stroke="#5EE3E3" strokeWidth="1.2" />
+        </g>
+      </g>
     </svg>
   );
 }
