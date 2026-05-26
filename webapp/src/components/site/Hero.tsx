@@ -13,7 +13,7 @@ export function Hero() {
         <div className="max-w-3xl animate-fade-up">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-medium mb-6">
             <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
-            Now serving select Texas neighborhoods
+            Now serving Dallas–Fort Worth & surrounding areas
           </div>
 
           <h1 className="font-display text-5xl md:text-7xl lg:text-8xl leading-[0.95] tracking-tight text-balance">
@@ -22,7 +22,7 @@ export function Hero() {
           </h1>
 
           <p className="mt-6 text-lg md:text-xl text-muted-foreground max-w-xl text-balance">
-            White-glove trash bin valet for Texas. We roll your cans out the night before pickup and bring them back the next day — so you never miss collection, and never look at your driveway the same way again.
+            White-glove trash bin valet for the Dallas–Fort Worth metroplex. We roll your cans out the night before pickup and bring them back the next day — so you never miss collection, and never look at your driveway the same way again.
           </p>
 
           <div className="mt-8 flex flex-col sm:flex-row gap-3">
@@ -56,7 +56,7 @@ export function Hero() {
               <Stat label="Homes served" value="500+" />
               <Stat label="On-time rate" value="99.6%" />
               <Stat label="Avg. response" value="< 4 hrs" />
-              <Stat label="Cities" value="Greater Texas" />
+              <Stat label="Cities" value="DFW Metroplex" />
             </div>
           </div>
         </div>

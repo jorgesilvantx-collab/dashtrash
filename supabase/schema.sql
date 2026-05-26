@@ -34,10 +34,14 @@ create table if not exists service_areas (
   created_at timestamptz not null default now()
 );
 
--- Seed a default service area (user can edit later in dispatch panel)
+-- Seed DFW + surrounding service areas (editable later in dispatch panel)
 insert into service_areas (name, center_lat, center_lng, radius_miles, active, cluster_threshold)
-select 'Primary Service Area', 30.2672, -97.7431, 15, true, 25
-where not exists (select 1 from service_areas);
+select 'Dallas', 32.7767, -96.7970, 25, true, 25
+where not exists (select 1 from service_areas where name = 'Dallas');
+
+insert into service_areas (name, center_lat, center_lng, radius_miles, active, cluster_threshold)
+select 'Fort Worth', 32.7555, -97.3308, 25, true, 25
+where not exists (select 1 from service_areas where name = 'Fort Worth');
 
 -- ============================================================================
 -- CUSTOMER LEADS (signups before they become paying customers)

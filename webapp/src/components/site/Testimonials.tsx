@@ -1,9 +1,9 @@
 import { Star } from "lucide-react";
 
 const quotes = [
-  { name: "Maria G.", role: "Round Rock homeowner", body: "I forgot it was even Tuesday. They just… handled it. Photo on my phone proving it. Best $63 I spend." },
-  { name: "Mark D.", role: "HOA Board Member", body: "We rolled this out across 64 doors. Complaints dropped. Curb appeal went up. Easy decision." },
-  { name: "Linda B.", role: "Daughter & caretaker", body: "Mom's on long-term care insurance — DashTrash handled the billing. She hasn't lifted a bin since." },
+  { name: "Maria G.", role: "Plano homeowner", body: "I forgot it was even Tuesday. They just… handled it. Photo on my phone proving it. Best $63 I spend." },
+  { name: "Mark D.", role: "Frisco HOA Board Member", body: "We rolled this out across 64 doors. Complaints dropped. Curb appeal went up. Easy decision." },
+  { name: "Linda B.", role: "Arlington — daughter & caretaker", body: "Mom's on long-term care insurance — DashTrash handled the billing. She hasn't lifted a bin since." },
 ];
 
 export function Testimonials() {

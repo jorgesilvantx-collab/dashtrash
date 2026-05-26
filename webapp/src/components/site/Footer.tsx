@@ -11,7 +11,7 @@ export function Footer() {
               <span className="font-display text-xl tracking-tight">DashTrash<span className="text-primary">TX</span></span>
             </Link>
             <p className="mt-4 max-w-sm text-sm text-muted-foreground leading-relaxed">
-              The white-glove trash bin valet for Texas homes, properties, and seniors. Bins out the night before, back the day after — every week.
+              The white-glove trash bin valet for Dallas–Fort Worth homes, properties, and seniors. Bins out the night before, back the day after — every week.
             </p>
             <p className="mt-6 text-xs text-muted-foreground">
               © {new Date().getFullYear()} DashTrashTX. All rights reserved.

@@ -10,9 +10,9 @@ export function Coverage() {
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div>
             <div className="text-xs font-medium tracking-[0.2em] uppercase text-primary mb-4">Coverage</div>
-            <h2 className="font-display text-4xl md:text-6xl tracking-tight text-balance">Not in our area yet? Get on the list.</h2>
+            <h2 className="font-display text-4xl md:text-6xl tracking-tight text-balance">Serving DFW & surrounding cities.</h2>
             <p className="mt-5 text-muted-foreground max-w-md leading-relaxed">
-              When 25+ homes in your area sign up, we open a clustered route. You'll be notified the moment it goes live — and you're at the top of the list.
+              Dallas, Fort Worth, Plano, Frisco, Arlington, Irving, McKinney, Garland and more. Outside our current route? When 25+ homes in your area sign up, we open a clustered route — you'll be notified the moment it goes live.
             </p>
 
             <div className="mt-8 grid grid-cols-3 gap-4">
