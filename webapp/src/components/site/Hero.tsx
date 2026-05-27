@@ -3,6 +3,7 @@ import { ArrowRight, ShieldCheck, Camera, Clock, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { RouteCanvas } from "@/components/site/RouteCanvas";
 import { BinTrio } from "@/components/site/RollingBins";
+import { LogoMark } from "@/components/site/Logo";
 
 export function Hero() {
   return (
@@ -15,9 +16,12 @@ export function Hero() {
         <div className="grid lg:grid-cols-12 gap-10 lg:gap-12 items-center">
           {/* Left: Headline */}
           <div className="lg:col-span-7 animate-fade-up">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white hairline text-foreground/80 text-xs font-medium mb-7">
-              <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
-              <span className="font-mono-eyebrow text-[0.65rem]">Now serving Dallas–Fort Worth</span>
+            <div className="flex items-center gap-4 mb-6">
+              <LogoMark size={88} className="-ml-2" />
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white hairline text-foreground/80 text-xs font-medium">
+                <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
+                <span className="font-mono-eyebrow text-[0.65rem]">Now serving Dallas–Fort Worth</span>
+              </div>
             </div>
 
             <h1 className="font-display font-extrabold text-5xl md:text-7xl lg:text-[5.25rem] leading-[1.0] tracking-[-0.025em] text-ink">

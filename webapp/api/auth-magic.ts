@@ -22,7 +22,19 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const email = (body?.email || "").trim().toLowerCase();
   if (!email || !email.includes("@")) return fail(res, "Valid email required");
 
-  const role = body?.role && ["customer", "driver", "admin"].includes(body.role) ? body.role : "customer";
+  // Owner allow-list: these emails always get admin role regardless of what the
+  // login form claims. Add more via the OWNER_EMAILS env var (comma-separated).
+  const OWNER_EMAILS = new Set(
+    (process.env.OWNER_EMAILS || "jorge@dashtrashtx.com,jorgesilva@dashtrashtx.com,owner@dashtrashtx.com")
+      .split(",")
+      .map((s) => s.trim().toLowerCase())
+      .filter(Boolean),
+  );
+
+  let role: "customer" | "driver" | "admin" =
+    body?.role && ["customer", "driver", "admin"].includes(body.role) ? body.role : "customer";
+  if (OWNER_EMAILS.has(email)) role = "admin";
+
   const next = body?.next || "";
 
   try {
@@ -45,7 +57,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     if (!link.hashed_token) return fail(res, "No token returned", 500, "supabase_error");
 
     if (link.id) {
-      await fetch(`${SUPABASE_URL}/rest/v1/profiles?id=eq.${link.id}`, {
+      await fetch(`${SUPABASE_URL}/rest/v1/profiles`, {
         method: "POST",
         headers: {
           apikey: SUPABASE_SERVICE_ROLE,

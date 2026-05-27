@@ -1,76 +1,111 @@
 import { cn } from "@/lib/utils";
 
 /**
- * DashTrashTX D-monogram: bold capital D outline with three diagonal "dash" stripes
- * cutting through the interior. Uber-style: rugged, minimal, high-contrast.
+ * Inline SVG D-monogram matching the DashTrashTX brand mark:
+ * outlined italic-leaning D with double cyan border and stylized dash strokes inside.
  */
-export function Logo({ className, size = 40, dark = false }: { className?: string; size?: number; dark?: boolean }) {
-  const stroke = dark ? "#5EE3E3" : "#5EE3E3";
-  const dashFill = dark ? "#FFFFFF" : "#0F1722";
-  const dashOutline = "#5EE3E3";
-
+export function Logo({ className, size = 40 }: { className?: string; size?: number; dark?: boolean }) {
   return (
     <svg
       width={size}
       height={size}
-      viewBox="0 0 64 64"
+      viewBox="0 0 80 80"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={cn("shrink-0", className)}
       aria-label="DashTrashTX"
       role="img"
     >
-      {/* Bold D outline */}
+      {/* D outer outline (italic-leaning, double border) */}
       <path
-        d="M10 8 H32 C46.3594 8 58 19.6406 58 34 C58 48.3594 46.3594 60 32 60 H10 V8 Z M19 17 V51 H32 C41.3888 51 49 43.3888 49 34 C49 24.6112 41.3888 17 32 17 H19 Z"
-        fill={stroke}
-        stroke={stroke}
-        strokeWidth="0.5"
+        d="M16 10 H46 C60 10 70 21 70 36 C70 51 60 64 46 64 H16 L24 10 Z"
+        stroke="#5EE3E3"
+        strokeWidth="4"
         strokeLinejoin="round"
+        fill="none"
       />
+      <path
+        d="M22 16 H45 C56.6 16 64 25.4 64 36 C64 47 56.6 58 45 58 H22 L28 16 Z"
+        stroke="#FFFFFF"
+        strokeWidth="2"
+        strokeLinejoin="round"
+        fill="none"
+      />
+      {/* Three diagonal dashes through the D belly */}
+      <g transform="rotate(-18 40 38)">
+        <rect x="20" y="22" width="34" height="4" rx="1" fill="#5EE3E3" />
+        <rect x="20" y="34" width="34" height="4" rx="1" fill="#5EE3E3" />
+        <rect x="20" y="46" width="34" height="4" rx="1" fill="#5EE3E3" />
+      </g>
+    </svg>
+  );
+}
 
-      {/* Three diagonal dash stripes cutting through the D */}
-      <g transform="rotate(-22 32 34)">
-        <rect x="6" y="20" width="38" height="5" rx="1" fill={dashFill} stroke={dashOutline} strokeWidth="1.5" />
-        <rect x="6" y="31" width="38" height="5" rx="1" fill={dashFill} stroke={dashOutline} strokeWidth="1.5" />
-        <rect x="6" y="42" width="38" height="5" rx="1" fill={dashFill} stroke={dashOutline} strokeWidth="1.5" />
+/** Square dark tile — Navbar/PortalShell brand icon. */
+export function LogoTile({ className, size = 40 }: { className?: string; size?: number }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 80 80"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={cn("shrink-0", className)}
+      aria-label="DashTrashTX"
+      role="img"
+    >
+      <rect x="0" y="0" width="80" height="80" rx="18" fill="#0F1722" />
+      <rect x="0.5" y="0.5" width="79" height="79" rx="17.5" stroke="#5EE3E3" strokeOpacity="0.25" />
+      <g transform="translate(4 4) scale(0.9)">
+        <path
+          d="M16 10 H46 C60 10 70 21 70 36 C70 51 60 64 46 64 H16 L24 10 Z"
+          stroke="#5EE3E3"
+          strokeWidth="4"
+          strokeLinejoin="round"
+          fill="none"
+        />
+        <path
+          d="M22 16 H45 C56.6 16 64 25.4 64 36 C64 47 56.6 58 45 58 H22 L28 16 Z"
+          stroke="#FFFFFF"
+          strokeWidth="2"
+          strokeLinejoin="round"
+          fill="none"
+        />
+        <g transform="rotate(-18 40 38)">
+          <rect x="20" y="22" width="34" height="4" rx="1" fill="#5EE3E3" />
+          <rect x="20" y="34" width="34" height="4" rx="1" fill="#5EE3E3" />
+          <rect x="20" y="46" width="34" height="4" rx="1" fill="#5EE3E3" />
+        </g>
       </g>
     </svg>
   );
 }
 
 /**
- * Square tile version — for favicon-like contexts (Navbar/PortalShell).
- * Dark rounded background with the D-monogram in cyan.
+ * Photographic logo — the user's actual raster mark on a dark background.
+ * Uses mix-blend-mode: lighten so the black bg disappears over light surfaces.
+ * Pass `darkSurface` when the surrounding bg is already dark to skip the blend.
  */
-export function LogoTile({ className, size = 40 }: { className?: string; size?: number }) {
+export function LogoMark({
+  className,
+  size = 120,
+  darkSurface = false,
+}: {
+  className?: string;
+  size?: number;
+  darkSurface?: boolean;
+}) {
   return (
-    <svg
+    <img
+      src="/logo-dashtrash.jpg"
+      alt="DashTrashTX"
       width={size}
-      height={size}
-      viewBox="0 0 64 64"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className={cn("shrink-0", className)}
-      aria-label="DashTrashTX"
-      role="img"
-    >
-      <rect x="0" y="0" width="64" height="64" rx="14" fill="#0F1722" />
-      <rect x="0.5" y="0.5" width="63" height="63" rx="13.5" stroke="#5EE3E3" strokeOpacity="0.2" />
-
-      {/* Inner D — scaled down */}
-      <g transform="translate(8 8) scale(0.75)">
-        <path
-          d="M10 8 H32 C46.3594 8 58 19.6406 58 34 C58 48.3594 46.3594 60 32 60 H10 V8 Z M19 17 V51 H32 C41.3888 51 49 43.3888 49 34 C49 24.6112 41.3888 17 32 17 H19 Z"
-          fill="#5EE3E3"
-        />
-        <g transform="rotate(-22 32 34)">
-          <rect x="6" y="20" width="38" height="5" rx="1" fill="#FFFFFF" stroke="#5EE3E3" strokeWidth="1.2" />
-          <rect x="6" y="31" width="38" height="5" rx="1" fill="#FFFFFF" stroke="#5EE3E3" strokeWidth="1.2" />
-          <rect x="6" y="42" width="38" height="5" rx="1" fill="#FFFFFF" stroke="#5EE3E3" strokeWidth="1.2" />
-        </g>
-      </g>
-    </svg>
+      height={Math.round(size * 0.78)}
+      style={{ width: size, height: "auto", mixBlendMode: darkSurface ? "normal" : "lighten" }}
+      className={cn("select-none pointer-events-none", className)}
+      loading="eager"
+      decoding="async"
+    />
   );
 }
 
