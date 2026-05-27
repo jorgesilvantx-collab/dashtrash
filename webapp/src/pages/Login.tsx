@@ -92,6 +92,18 @@ export default function Login() {
                   <p className="text-muted-foreground text-sm leading-relaxed">
                     We sent a magic sign-in link to <span className="text-ink font-medium">{email}</span>. Click it to log in — no password needed.
                   </p>
+                  <div className="mt-6 p-4 rounded-2xl bg-secondary/30 border border-border text-left">
+                    <p className="text-xs text-muted-foreground leading-relaxed">
+                      <span className="text-ink font-semibold">Didn't get it?</span> Check your spam folder, or wait a minute — sometimes email scanners delay delivery. Each link is single-use and expires in 1 hour.
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => { setState("idle"); setErr(null); }}
+                    className="mt-4 text-xs text-muted-foreground underline underline-offset-2 hover:text-ink"
+                  >
+                    Send another link
+                  </button>
                 </div>
               ) : (
                 <form onSubmit={onSubmit} className="space-y-5">
