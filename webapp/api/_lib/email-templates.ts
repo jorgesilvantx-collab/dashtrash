@@ -1,4 +1,4 @@
-// Branded transactional email templates for DashTrashTX.
+// Branded transactional email templates for DashTrash.
 // All templates render at 600px wide, table-based, inline styles only — Outlook/Gmail safe.
 // Brand: ink #0F1722, cyan #5EE3E3, off-white #FAFAF7, coral #FF7F65.
 
@@ -13,7 +13,7 @@ const FONT_STACK =
   "'Apple Color Emoji','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif";
 
 const SUPPORT_PHONE = "(682) 362-5847";
-const SUPPORT_ADDR = "DashTrashTX · Dallas–Fort Worth, TX";
+const SUPPORT_ADDR = "DashTrash · Dallas–Fort Worth, TX";
 
 export type Template = { subject: string; html: string; text: string };
 
@@ -31,7 +31,7 @@ function shell(opts: { previewText: string; bodyHtml: string; supportEmail: stri
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta name="color-scheme" content="light only" />
     <meta name="supported-color-schemes" content="light" />
-    <title>DashTrashTX</title>
+    <title>DashTrash</title>
   </head>
   <body style="margin:0;padding:0;background:${BG};font-family:${FONT_STACK};color:${INK};-webkit-font-smoothing:antialiased;">
     <div style="display:none;max-height:0;overflow:hidden;opacity:0;color:transparent;mso-hide:all;">${escapeHtml(opts.previewText)}</div>
@@ -45,7 +45,7 @@ function shell(opts: { previewText: string; bodyHtml: string; supportEmail: stri
                 <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
                   <tr>
                     <td align="left" style="vertical-align:middle;">
-                      <span style="font-family:${FONT_STACK};font-size:22px;font-weight:800;color:#FFFFFF;letter-spacing:-0.5px;line-height:1;">DashTrash<span style="color:${CYAN};">TX</span></span>
+                      <span style="font-family:${FONT_STACK};font-size:22px;font-weight:800;color:#FFFFFF;letter-spacing:-0.5px;line-height:1;">Dash<span style="color:${CYAN};">Trash</span></span>
                     </td>
                     <td align="right" style="vertical-align:middle;">
                       <span style="font-family:${FONT_STACK};font-size:12px;color:${CYAN};letter-spacing:1px;text-transform:uppercase;">Bin valet for DFW</span>
@@ -119,7 +119,7 @@ function callout(text: string, color: "cyan" | "coral" = "cyan"): string {
 }
 
 function signoff(): string {
-  return `<p style="margin:24px 0 0 0;font-family:${FONT_STACK};font-size:15px;line-height:1.6;color:${INK};">— The DashTrashTX team</p>`;
+  return `<p style="margin:24px 0 0 0;font-family:${FONT_STACK};font-size:15px;line-height:1.6;color:${INK};">— The DashTrash team</p>`;
 }
 
 function firstNameOf(name: string): string {
@@ -142,7 +142,7 @@ export function welcomeInArea(args: {
   if (args.monthlyPrice) rows.push({ label: "Monthly", value: args.monthlyPrice });
   if (args.firstServiceDate) rows.push({ label: "First service", value: args.firstServiceDate });
 
-  const subject = "Welcome to DashTrashTX — we got your signup";
+  const subject = "Welcome to DashTrash — we got your signup";
   const previewText = `Hi ${first} — we got your signup. Our team confirms your schedule within 24 hours.`;
 
   const bodyHtml = `
@@ -156,13 +156,13 @@ export function welcomeInArea(args: {
 
   const text = `Hi ${first},
 
-Thanks for signing up with DashTrashTX! Your address (${args.address}) is in our active service zone.
+Thanks for signing up with DashTrash! Your address (${args.address}) is in our active service zone.
 
 What happens next: Our team will reach out within 24 hours to confirm your pickup schedule and complete checkout. No charges until you approve.
 
 Questions? Reply to this email or call ${SUPPORT_PHONE}.
 
-— The DashTrashTX team`;
+— The DashTrash team`;
 
   return {
     subject,
@@ -192,7 +192,7 @@ export function waitlistJoined(args: {
     rows.push({ label: "Neighbors to go", value: String(args.neighborsNeeded) });
   }
 
-  const subject = "You're on the DashTrashTX waitlist";
+  const subject = "You're on the DashTrash waitlist";
   const previewText = `Hi ${first} — you're on the list for your neighborhood.`;
 
   const bodyHtml = `
@@ -206,7 +206,7 @@ export function waitlistJoined(args: {
 
   const text = `Hi ${first},
 
-Your address (${args.address}) is just outside our current routes, but you're now on the DashTrashTX waitlist for your neighborhood.${
+Your address (${args.address}) is just outside our current routes, but you're now on the DashTrash waitlist for your neighborhood.${
     typeof args.current === "number" && typeof args.threshold === "number"
       ? `\n\nCluster progress: ${args.current} of ${args.threshold} homes.`
       : ""
@@ -214,7 +214,7 @@ Your address (${args.address}) is just outside our current routes, but you're no
 
 The more neighbors who sign up, the faster we open service. You'll be among the first notified.
 
-— The DashTrashTX team`;
+— The DashTrash team`;
 
   return {
     subject,
@@ -227,7 +227,7 @@ The more neighbors who sign up, the faster we open service. You'll be among the 
 
 export function driverApplied(args: { firstName: string; supportEmail: string }): Template {
   const first = firstNameOf(args.firstName);
-  const subject = "We got your DashTrashTX driver application";
+  const subject = "We got your DashTrash driver application";
   const previewText = `Thanks for applying, ${first}. We review every app within 48 hours.`;
 
   const bodyHtml = `
@@ -240,11 +240,11 @@ export function driverApplied(args: { firstName: string; supportEmail: string })
 
   const text = `Hi ${first},
 
-Thanks for applying to drive with DashTrashTX! We review every application within 48 hours. If you're a fit, we'll reach out to schedule a quick call and a ride-along.
+Thanks for applying to drive with DashTrash! We review every application within 48 hours. If you're a fit, we'll reach out to schedule a quick call and a ride-along.
 
 Questions? Reply to this email or call ${SUPPORT_PHONE}.
 
-— The DashTrashTX team`;
+— The DashTrash team`;
 
   return {
     subject,
@@ -261,12 +261,12 @@ export function partnerInquiry(args: {
   supportEmail: string;
 }): Template {
   const first = firstNameOf(args.firstName);
-  const subject = "DashTrashTX partnership — we got your inquiry";
+  const subject = "DashTrash partnership — we got your inquiry";
   const previewText = `Hi ${first} — your partnership inquiry for ${args.companyName} is in.`;
 
   const bodyHtml = `
     ${h1(`Thanks, ${escapeHtml(first)}.`)}
-    ${p(`We got your partnership inquiry for <b>${escapeHtml(args.companyName)}</b>. Our partner team will review and reach out within one business day to discuss how DashTrashTX can support your clients.`)}
+    ${p(`We got your partnership inquiry for <b>${escapeHtml(args.companyName)}</b>. Our partner team will review and reach out within one business day to discuss how DashTrash can support your clients.`)}
     ${callout("<b>Coming up:</b> A short call to understand your client base, then a custom proposal — pricing, branding, white-label options.")}
     ${p("Questions in the meantime? Reply to this email or call " + SUPPORT_PHONE + ".")}
     ${signoff()}
@@ -274,11 +274,11 @@ export function partnerInquiry(args: {
 
   const text = `Hi ${first},
 
-Thanks for reaching out about a DashTrashTX partnership for ${args.companyName}. Our partner team will review and reach out within 1 business day to discuss how we can support your clients.
+Thanks for reaching out about a DashTrash partnership for ${args.companyName}. Our partner team will review and reach out within 1 business day to discuss how we can support your clients.
 
 Questions in the meantime? Reply to this email or call ${SUPPORT_PHONE}.
 
-— The DashTrashTX team`;
+— The DashTrash team`;
 
   return {
     subject,
@@ -334,8 +334,8 @@ export function ownerNotification(args: {
 }): Template {
   const label = FORM_LABELS[args.formType];
   const subject = args.subjectExtra
-    ? `[DashTrashTX] ${label} — ${args.subjectExtra}`
-    : `[DashTrashTX] ${label}`;
+    ? `[DashTrash] ${label} — ${args.subjectExtra}`
+    : `[DashTrash] ${label}`;
 
   const entries = Object.entries(args.payload).filter(
     ([, v]) => v !== undefined && v !== null && v !== ""

@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 
 /**
- * DashTrashTX brand mark.
+ * DashTrash brand mark.
  *
  * Friendly, trustworthy monogram: a confident geometric "D" shaped like a
  * trash-bin silhouette, with a single dash swoosh cutting across the curve.
@@ -53,7 +53,7 @@ export function Logo({ className, size = 40 }: LogoProps) {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={cn("shrink-0", className)}
-      aria-label="DashTrashTX"
+      aria-label="DashTrash"
       role="img"
     >
       <Mark onDark={false} />
@@ -71,7 +71,7 @@ export function LogoTile({ className, size = 40 }: LogoProps) {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={cn("shrink-0", className)}
-      aria-label="DashTrashTX"
+      aria-label="DashTrash"
       role="img"
     >
       <rect x="0" y="0" width="80" height="80" rx="18" fill="#0F1722" />
@@ -100,7 +100,7 @@ export function LogoMark({
 export function Wordmark({ className }: { className?: string }) {
   return (
     <span className={cn("font-display font-extrabold tracking-tight text-ink", className)}>
-      DashTrash<span className="text-primary">TX</span>
+      Dash<span className="text-primary">Trash</span>
     </span>
   );
 }

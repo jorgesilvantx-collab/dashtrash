@@ -52,7 +52,7 @@ export function Footer() {
 
         <div className="mt-14 pt-7 border-t border-border flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <div className="text-xs text-muted-foreground">
-            © {new Date().getFullYear()} DashTrashTX, LLC. All rights reserved.
+            © {new Date().getFullYear()} DashTrash, LLC. All rights reserved.
           </div>
           <div className="flex items-center gap-6 text-xs text-muted-foreground">
             <Link to="/legal/terms" className="hover:text-ink">Terms</Link>

@@ -108,7 +108,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           amount: totalCents,
           currency: "usd",
           destination: driver.stripe_account_id,
-          description: `DashTrashTX route ${route.id} (${stopsCount} stops, ${miles.toFixed(1)} mi)`,
+          description: `DashTrash route ${route.id} (${stopsCount} stops, ${miles.toFixed(1)} mi)`,
           metadata: { route_id: route.id, driver_id: driver.profile_id, payout_id: payoutRow.id },
         },
       });

@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { useSearchParams, useNavigate, Link } from "react-router-dom";
-import { Loader2, AlertCircle, CheckCircle2 } from "lucide-react";
+import { Loader2, AlertCircle, CheckCircle2, Mail } from "lucide-react";
 import { PageShell } from "@/components/site/PageShell";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/lib/supabase";
 import { useAuth } from "@/lib/auth";
 import { safeNext } from "@/components/auth/AuthGate";
+import { api } from "@/lib/api";
 
 export default function AuthVerify() {
   const [params] = useSearchParams();
@@ -13,6 +14,8 @@ export default function AuthVerify() {
   const { session, profile, loading } = useAuth();
   const [status, setStatus] = useState<"verifying" | "ok" | "error">("verifying");
   const [err, setErr] = useState<string | null>(null);
+  const [resendState, setResendState] = useState<"idle" | "sending" | "sent" | "failed">("idle");
+  const [resendErr, setResendErr] = useState<string | null>(null);
   const ran = useRef(false);
 
   useEffect(() => {
@@ -80,11 +83,61 @@ export default function AuthVerify() {
                 <div className="h-14 w-14 rounded-2xl bg-destructive/15 flex items-center justify-center mx-auto mb-5">
                   <AlertCircle className="h-7 w-7 text-destructive" strokeWidth={2} />
                 </div>
-                <h1 className="font-display font-bold text-2xl text-ink mb-2">Link didn't work.</h1>
-                <p className="text-muted-foreground text-sm mb-6">{err}</p>
-                <Button asChild className="w-full h-12 rounded-2xl bg-primary text-primary-foreground hover:bg-primary/90 font-semibold">
-                  <Link to="/login">Request a new sign-in link</Link>
-                </Button>
+                <h1 className="font-display font-bold text-2xl text-ink mb-2">Link expired.</h1>
+                <p className="text-muted-foreground text-sm mb-6">
+                  Sign-in links work for one hour and can only be used once. We'll send you a fresh one.
+                </p>
+                {resendState === "sent" ? (
+                  <div className="rounded-2xl bg-primary/15 border border-primary/30 px-4 py-3 text-sm text-ink">
+                    Check your inbox at <strong>{params.get("email")}</strong> for a new sign-in link.
+                  </div>
+                ) : (
+                  <>
+                    <Button
+                      onClick={async () => {
+                        const email = params.get("email");
+                        if (!email) {
+                          setResendErr("No email on this link — request a new one from the sign-in page.");
+                          setResendState("failed");
+                          return;
+                        }
+                        setResendState("sending");
+                        setResendErr(null);
+                        try {
+                          const next = params.get("next") ?? undefined;
+                          await api.post("/api/auth-magic", { email, next });
+                          setResendState("sent");
+                        } catch (e) {
+                          setResendErr(e instanceof Error ? e.message : "Could not send a new link.");
+                          setResendState("failed");
+                        }
+                      }}
+                      disabled={resendState === "sending"}
+                      className="w-full h-12 rounded-2xl bg-primary text-primary-foreground hover:bg-primary/90 font-semibold"
+                    >
+                      {resendState === "sending" ? (
+                        <>
+                          <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                          Sending…
+                        </>
+                      ) : (
+                        <>
+                          <Mail className="h-4 w-4 mr-2" />
+                          Email me a new link
+                        </>
+                      )}
+                    </Button>
+                    <Button asChild variant="outline" className="w-full mt-3 h-12 rounded-2xl">
+                      <Link to="/login">Use a different email</Link>
+                    </Button>
+                    {resendState === "failed" && resendErr ? (
+                      <p className="mt-4 text-xs text-destructive">{resendErr}</p>
+                    ) : null}
+                    {err ? (
+                      <p className="mt-5 text-[11px] text-muted-foreground/70">Error: {err}</p>
+                    ) : null}
+                  </>
+                )}
               </>
             )}
           </div>

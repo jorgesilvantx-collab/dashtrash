@@ -64,7 +64,7 @@ export function AuthGate({ children, title, description, eyebrow }: Props) {
             </h1>
             <p className="mt-5 text-base md:text-lg text-muted-foreground leading-relaxed">
               {description ??
-                "DashTrashTX keeps your address, pickup days, and photo proof tied to your account — so you only ever have to enter them once. Sign in or create a free account to continue."}
+                "DashTrash keeps your address, pickup days, and photo proof tied to your account — so you only ever have to enter them once. Sign in or create a free account to continue."}
             </p>
           </div>
 

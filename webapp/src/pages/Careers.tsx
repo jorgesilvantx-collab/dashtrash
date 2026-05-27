@@ -121,7 +121,7 @@ export default function Careers() {
             <div className="text-center mb-12 animate-fade-up">
               <div className="font-mono-eyebrow text-muted-foreground mb-4">Drive with us</div>
               <h1 className="font-display font-extrabold text-4xl md:text-6xl tracking-tight text-balance text-ink">
-                Drive for <span className="text-primary">DashTrashTX</span>.
+                Drive for <span className="text-primary">DashTrash</span>.
               </h1>
               <p className="mt-5 text-lg text-muted-foreground max-w-xl mx-auto leading-relaxed">
                 Earn weekly. Pick your routes. Be home before the kids wake up. We're hiring drivers across DFW.

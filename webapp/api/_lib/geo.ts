@@ -37,7 +37,7 @@ export async function geocodeAddress(query: string): Promise<GeocodeResult> {
   }
   try {
     const url = `https://nominatim.openstreetmap.org/search?format=json&limit=1&countrycodes=us&q=${encodeURIComponent(query)}`;
-    const res = await fetch(url, { headers: { "User-Agent": "DashTrashTX/1.0" } });
+    const res = await fetch(url, { headers: { "User-Agent": "DashTrash/1.0" } });
     if (!res.ok) return null;
     const data = (await res.json()) as Array<{ lat: string; lon: string; display_name: string }>;
     if (!data.length) return null;

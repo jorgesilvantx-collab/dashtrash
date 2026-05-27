@@ -347,7 +347,7 @@ export default function Partners() {
                   </Button>
 
                   <p className="text-center text-xs text-muted-foreground">
-                    By submitting you agree to be contacted by DashTrashTX. We never share your information.
+                    By submitting you agree to be contacted by DashTrash. We never share your information.
                   </p>
                 </form>
               </Form>

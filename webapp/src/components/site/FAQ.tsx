@@ -1,7 +1,7 @@
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const faqs = [
-  { q: "What exactly does DashTrashTX do?", a: "We are a curbside trash bin valet. We take your trash and recycling bins from where you store them out to the curb the night before pickup, then bring them back the day after collection. You never miss a pickup, never lift a bin." },
+  { q: "What exactly does DashTrash do?", a: "We are a curbside trash bin valet. We take your trash and recycling bins from where you store them out to the curb the night before pickup, then bring them back the day after collection. You never miss a pickup, never lift a bin." },
   { q: "How much does it cost?", a: "Residential is $63/month for weekly service on one home. Enterprise (HOAs, multi-family, property management) is quoted by volume. Elderly service is often fully or partially covered by long-term care or supplemental insurance — we help you submit it." },
   { q: "What if my pickup day is Tuesday?", a: "If your city collects on Tuesday, we roll your bins out Monday evening and return them Tuesday afternoon, after the truck. Same logic for any day of the week." },
   { q: "Do I need to be home?", a: "No. We work outside your home — you don't need to be there, and most customers never see us. You'll get a photo confirmation on every visit." },
