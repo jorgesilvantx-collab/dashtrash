@@ -97,10 +97,11 @@ export function LogoMark({
   return <LogoTile className={className} size={size} />;
 }
 
+// Pass className to override color — e.g. "text-white [&>span]:text-primary" on dark bg.
 export function Wordmark({ className }: { className?: string }) {
   return (
     <span className={cn("font-display font-extrabold tracking-tight text-ink", className)}>
-      Dash<span className="text-primary">Trash</span>
+      DashTrash<span className="text-primary">TX</span>
     </span>
   );
 }

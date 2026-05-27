@@ -70,16 +70,16 @@ export default function Login() {
 
   return (
     <PageShell>
-      <section className="relative bg-background overflow-hidden">
-        <div className="absolute inset-x-0 top-0 h-[500px] bg-dots opacity-30 pointer-events-none [mask-image:radial-gradient(ellipse_at_top,black_20%,transparent_70%)]" />
-        <div className="container relative py-24 md:py-32">
+      <section className="relative bg-[#0F1722] overflow-hidden min-h-[70vh] flex items-center">
+        <div className="absolute inset-0 bg-dots opacity-10 pointer-events-none" />
+        <div className="container relative py-20 md:py-28 w-full">
           <div className="max-w-md mx-auto">
             <div className="text-center mb-8 animate-fade-up">
-              <div className="font-mono-eyebrow text-muted-foreground mb-4">Sign in</div>
-              <h1 className="font-display font-extrabold text-3xl md:text-4xl text-ink tracking-tight">
+              <div className="font-mono-eyebrow text-white/40 mb-4">Sign in</div>
+              <h1 className="font-display font-extrabold text-3xl md:text-4xl text-white tracking-tight">
                 {label.title}
               </h1>
-              <p className="mt-3 text-muted-foreground">{label.sub}</p>
+              <p className="mt-3 text-white/50">{label.sub}</p>
             </div>
 
             <div className="p-7 md:p-8 rounded-3xl bg-white border border-border ring-soft">

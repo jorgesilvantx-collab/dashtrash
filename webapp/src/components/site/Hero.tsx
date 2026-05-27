@@ -7,10 +7,10 @@ import { LogoMark } from "@/components/site/Logo";
 
 export function Hero() {
   return (
-    <section className="relative overflow-hidden bg-background">
-      <div className="absolute inset-x-0 top-0 h-[720px] bg-dots opacity-[0.3] pointer-events-none [mask-image:radial-gradient(ellipse_at_top_left,black_15%,transparent_65%)]" />
-      <div className="absolute -top-32 right-[-10%] h-[420px] w-[420px] rounded-full bg-primary/25 blur-[140px] pointer-events-none" />
-      <div className="absolute top-72 left-[-8%] h-[320px] w-[320px] rounded-full bg-[#FF7F65]/15 blur-[120px] pointer-events-none" />
+    <section className="relative overflow-hidden bg-[#0F1722]">
+      <div className="absolute inset-0 bg-dots opacity-[0.07] pointer-events-none" />
+      <div className="absolute -top-32 right-[-10%] h-[500px] w-[500px] rounded-full bg-primary/20 blur-[160px] pointer-events-none" />
+      <div className="absolute bottom-0 left-[-8%] h-[400px] w-[400px] rounded-full bg-[#FF7F65]/10 blur-[140px] pointer-events-none" />
 
       <div className="container relative pt-16 pb-16 md:pt-24 md:pb-24">
         <div className="grid lg:grid-cols-12 gap-10 lg:gap-12 items-center">
@@ -18,35 +18,34 @@ export function Hero() {
           <div className="lg:col-span-7 animate-fade-up">
             <div className="flex items-center gap-4 mb-6">
               <LogoMark size={88} className="-ml-2" />
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white hairline text-foreground/80 text-xs font-medium">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/15 text-white/70 text-xs font-medium">
                 <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
                 <span className="font-mono-eyebrow text-[0.65rem]">Now serving Dallas–Fort Worth</span>
               </div>
             </div>
 
-            <h1 className="font-display font-extrabold text-5xl md:text-7xl lg:text-[5.25rem] leading-[1.0] tracking-[-0.025em] text-ink">
+            <h1 className="font-display font-extrabold text-5xl md:text-7xl lg:text-[5.5rem] leading-[1.0] tracking-[-0.03em] text-white">
               Your bins.
               <br />
               <span className="relative inline-block">
-                <span className="relative z-10">Handled.</span>
-                <span className="absolute -bottom-2 left-0 right-0 h-3 bg-primary/40 -z-0 rounded-sm" aria-hidden />
+                <span className="relative z-10 text-primary">Handled.</span>
               </span>
               <br />
-              <span className="text-muted-foreground/80">Every single week.</span>
+              <span className="text-white/50">Every week.</span>
             </h1>
 
-            <p className="mt-7 text-lg md:text-xl text-foreground/70 max-w-xl leading-relaxed">
-              The curbside trash bin valet for Dallas–Fort Worth. Out the night before pickup, back the day after — rain, shine, or holiday. Zero touching trash. Zero thinking about it.
+            <p className="mt-7 text-lg md:text-xl text-white/60 max-w-xl leading-relaxed">
+              The curbside trash bin valet for Dallas–Fort Worth. Out the night before pickup, back the day after — rain, shine, or holiday. Zero effort. Every time.
             </p>
 
             <div className="mt-9 flex flex-col sm:flex-row gap-3">
-              <Button asChild size="lg" className="h-13 px-7 bg-primary text-primary-foreground hover:bg-primary/90 rounded-2xl font-semibold group shadow-[0_8px_24px_-8px_rgba(94,227,227,0.6)]">
+              <Button asChild size="lg" className="h-13 px-7 bg-primary text-[#0F1722] hover:bg-primary/90 rounded-2xl font-bold group shadow-[0_8px_32px_-4px_rgba(94,227,227,0.5)]">
                 <Link to="/signup">
                   Start service — $63/mo
                   <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
                 </Link>
               </Button>
-              <Button asChild size="lg" variant="outline" className="h-13 px-7 rounded-2xl border-foreground/15 text-foreground bg-white hover:bg-secondary font-semibold">
+              <Button asChild size="lg" className="h-13 px-7 rounded-2xl border border-white/20 text-white bg-white/5 hover:bg-white/10 font-semibold">
                 <a href="tel:+16823625847">
                   <Phone className="mr-2 h-4 w-4 text-primary" />
                   (682) 362-5847
@@ -54,7 +53,7 @@ export function Hero() {
               </Button>
             </div>
 
-            <div className="mt-10 flex flex-wrap items-center gap-x-7 gap-y-3 text-sm text-foreground/70">
+            <div className="mt-10 flex flex-wrap items-center gap-x-7 gap-y-3 text-sm text-white/50">
               <Trust icon={<ShieldCheck className="h-4 w-4 text-primary" />} label="Insured + background-checked" />
               <Trust icon={<Clock className="h-4 w-4 text-primary" />} label="Always on schedule" />
               <Trust icon={<Camera className="h-4 w-4 text-primary" />} label="Photo proof every visit" />
@@ -97,18 +96,18 @@ export function Hero() {
 
         {/* Bottom social-proof bar */}
         <div className="mt-20 md:mt-28 animate-fade-up delay-225">
-          <div className="font-mono-eyebrow text-muted-foreground text-center mb-6">Trusted by neighbors across</div>
-          <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-3 font-display font-bold text-xl md:text-2xl text-foreground/55">
+          <div className="font-mono-eyebrow text-white/30 text-center mb-6">Trusted by neighbors across</div>
+          <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-3 font-display font-bold text-xl md:text-2xl text-white/40">
             <span>Dallas</span>
-            <span className="text-muted-foreground/70">·</span>
+            <span className="text-white/20">·</span>
             <span>Plano</span>
-            <span className="text-muted-foreground/70">·</span>
+            <span className="text-white/20">·</span>
             <span>Frisco</span>
-            <span className="text-muted-foreground/70">·</span>
+            <span className="text-white/20">·</span>
             <span>Arlington</span>
-            <span className="text-muted-foreground/70">·</span>
+            <span className="text-white/20">·</span>
             <span>McKinney</span>
-            <span className="text-muted-foreground/70">·</span>
+            <span className="text-white/20">·</span>
             <span>Fort Worth</span>
           </div>
         </div>
