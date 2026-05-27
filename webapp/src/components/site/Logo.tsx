@@ -1,44 +1,46 @@
 import { cn } from "@/lib/utils";
 
 /**
- * DashTrash brand mark.
+ * DashTrashTX brand mark.
  *
- * Friendly, trustworthy monogram: a confident geometric "D" shaped like a
- * trash-bin silhouette, with a single dash swoosh cutting across the curve.
- * Two-tone — cyan + ink — no overlapping strokes, reads cleanly at 24px.
+ * Stacked monogram: a refined "DT" lock-up where the D is shaped like a
+ * trash bin (lid, body, dash-handle), and the T anchors the wordmark mention.
+ * Two-tone — ink + cyan — with a confident dash-slash that gives the brand
+ * its motion. Reads cleanly from 20px (favicon) to 240px (hero).
  */
 
 type LogoProps = {
   className?: string;
   size?: number;
-  /** When true, mark is rendered light-on-dark (cyan + cream). When false (default), ink + cyan on transparent. */
-  onDark?: boolean;
 };
 
 function Mark({ onDark = false }: { onDark?: boolean }) {
-  const stroke = onDark ? "#FAFAF7" : "#0F1722";
-  const accent = "#5EE3E3";
+  const ink = onDark ? "#FAFAF7" : "#0F1722";
+  const cyan = "#5EE3E3";
+  const coral = "#FF7F65";
   return (
     <>
-      {/* Bin body shaped like a D — slight inward taper toward the base */}
+      {/* Lid bar at top */}
+      <rect x="14" y="10" width="52" height="7" rx="3.5" fill={ink} />
+      {/* Lid knob */}
+      <rect x="34" y="3" width="12" height="7" rx="2" fill={ink} />
+
+      {/* Bin body — softer rounded "D" with subtle taper */}
       <path
-        d="M22 18 H44 C58 18 66 27 66 40 C66 53 58 62 44 62 H22 Z"
-        fill={accent}
-        stroke={stroke}
+        d="M16 19 H44 C58.6 19 68 28.5 68 41 C68 53.5 58.6 63 44 63 H16 Z"
+        fill={cyan}
+        stroke={ink}
         strokeWidth="4"
         strokeLinejoin="round"
       />
-      {/* Lid bar across the top — bin handle / lid */}
-      <rect x="14" y="12" width="50" height="6" rx="3" fill={stroke} />
-      {/* Lid knob */}
-      <rect x="35" y="6" width="10" height="6" rx="2" fill={stroke} />
-      {/* Dash swoosh — single confident motion line across the D belly */}
-      <path
-        d="M28 40 H56"
-        stroke={stroke}
-        strokeWidth="5"
-        strokeLinecap="round"
-      />
+
+      {/* Triple dash — confident motion / brand identity */}
+      <rect x="22" y="30" width="32" height="4" rx="2" fill={ink} />
+      <rect x="22" y="40" width="38" height="4" rx="2" fill={ink} />
+      <rect x="22" y="50" width="26" height="4" rx="2" fill={ink} />
+
+      {/* Coral accent dot — the "TX" star */}
+      <circle cx="60" cy="52" r="3.5" fill={coral} stroke={ink} strokeWidth="1.5" />
     </>
   );
 }
@@ -53,7 +55,7 @@ export function Logo({ className, size = 40 }: LogoProps) {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={cn("shrink-0", className)}
-      aria-label="DashTrash"
+      aria-label="DashTrashTX"
       role="img"
     >
       <Mark onDark={false} />
@@ -71,10 +73,16 @@ export function LogoTile({ className, size = 40 }: LogoProps) {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={cn("shrink-0", className)}
-      aria-label="DashTrash"
+      aria-label="DashTrashTX"
       role="img"
     >
-      <rect x="0" y="0" width="80" height="80" rx="18" fill="#0F1722" />
+      <defs>
+        <linearGradient id="logoTileBg" x1="0" y1="0" x2="0" y2="80" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stopColor="#162033" />
+          <stop offset="1" stopColor="#0B121C" />
+        </linearGradient>
+      </defs>
+      <rect x="0" y="0" width="80" height="80" rx="18" fill="url(#logoTileBg)" />
       <rect x="0.5" y="0.5" width="79" height="79" rx="17.5" stroke="#5EE3E3" strokeOpacity="0.25" />
       <Mark onDark />
     </svg>
@@ -82,8 +90,8 @@ export function LogoTile({ className, size = 40 }: LogoProps) {
 }
 
 /**
- * LogoMark — kept as an alias of LogoTile so old call sites (Hero.tsx) still
- * work, but rendering is the new clean monogram on a dark tile (no raster).
+ * LogoMark — Big display mark for hero sections. A larger D-bin lock-up with
+ * generous breathing room and a soft glow. Looks at home above headlines.
  */
 export function LogoMark({
   className,
@@ -91,16 +99,44 @@ export function LogoMark({
 }: {
   className?: string;
   size?: number;
-  /** Legacy prop — preserved so existing callers don't break. */
   darkSurface?: boolean;
 }) {
-  return <LogoTile className={className} size={size} />;
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 120 120"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={cn("shrink-0", className)}
+      aria-label="DashTrashTX"
+      role="img"
+    >
+      <defs>
+        <radialGradient id="logoMarkGlow" cx="50%" cy="55%" r="55%">
+          <stop offset="0%" stopColor="#5EE3E3" stopOpacity="0.4" />
+          <stop offset="60%" stopColor="#5EE3E3" stopOpacity="0.08" />
+          <stop offset="100%" stopColor="#5EE3E3" stopOpacity="0" />
+        </radialGradient>
+        <linearGradient id="logoMarkTile" x1="0" y1="0" x2="0" y2="120" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stopColor="#162033" />
+          <stop offset="1" stopColor="#0B121C" />
+        </linearGradient>
+      </defs>
+      <circle cx="60" cy="60" r="58" fill="url(#logoMarkGlow)" />
+      <rect x="10" y="10" width="100" height="100" rx="26" fill="url(#logoMarkTile)" />
+      <rect x="10.5" y="10.5" width="99" height="99" rx="25.5" stroke="#5EE3E3" strokeOpacity="0.3" />
+      <g transform="translate(20 20) scale(1.0)">
+        <Mark onDark />
+      </g>
+    </svg>
+  );
 }
 
-// Pass className to override color — e.g. "text-white [&>span]:text-primary" on dark bg.
+/** Wordmark — typographic logo. Pass className to override color. */
 export function Wordmark({ className }: { className?: string }) {
   return (
-    <span className={cn("font-display font-extrabold tracking-tight text-ink", className)}>
+    <span className={cn("font-display font-black tracking-tight text-ink", className)}>
       DashTrash<span className="text-primary">TX</span>
     </span>
   );
