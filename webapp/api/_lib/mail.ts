@@ -42,3 +42,17 @@ function escapeHtml(s: string) {
 }
 
 export const SUPPORT_EMAIL = process.env.SUPPORT_EMAIL || "support@dashtrashtx.com";
+
+// Optional backup inbox — owner notifications get CC'd here too so Jorge
+// receives them even while support@dashtrashtx.com DNS is being fixed.
+// Set SUPPORT_EMAIL_FALLBACK in Vercel to e.g. jorgesilva.ntx@gmail.com.
+export const SUPPORT_EMAIL_FALLBACK = process.env.SUPPORT_EMAIL_FALLBACK || "";
+
+// Returns the list of inboxes that should receive owner notifications.
+// Dedupes and filters empties, so it's safe to call from every API route.
+export function ownerInboxes(): string[] {
+  const list = [SUPPORT_EMAIL, SUPPORT_EMAIL_FALLBACK]
+    .map((s) => s.trim().toLowerCase())
+    .filter(Boolean);
+  return Array.from(new Set(list));
+}

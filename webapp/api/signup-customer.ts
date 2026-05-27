@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { admin } from "./_lib/supabase.js";
-import { sendMail, SUPPORT_EMAIL } from "./_lib/mail.js";
+import { sendMail, SUPPORT_EMAIL, ownerInboxes } from "./_lib/mail.js";
 import { geocodeAddress, haversineMiles, clusterKeyFromLatLng } from "./_lib/geo.js";
 import { fail, ok, readJson, setCors } from "./_lib/http.js";
 import { ownerNotification, welcomeInArea, waitlistJoined } from "./_lib/email-templates.js";
@@ -126,7 +126,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       });
 
       const r1 = await sendMail({
-        to: SUPPORT_EMAIL,
+        to: ownerInboxes(),
         subject: ownerTpl.subject,
         html: ownerTpl.html,
         text: ownerTpl.text,
@@ -221,7 +221,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     });
 
     await sendMail({
-      to: SUPPORT_EMAIL,
+      to: ownerInboxes(),
       subject: ownerTpl.subject,
       html: ownerTpl.html,
       text: ownerTpl.text,
