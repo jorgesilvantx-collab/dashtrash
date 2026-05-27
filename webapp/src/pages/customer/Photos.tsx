@@ -23,6 +23,7 @@ export default function Photos() {
       const { data, error } = await supabase
         .from("v_route_with_stops")
         .select("stop_id, completed_at, photo_url, action, street_address, city, notes")
+        .eq("customer_id", user!.id)
         .not("photo_url", "is", null)
         .order("completed_at", { ascending: false });
       if (error) throw error;

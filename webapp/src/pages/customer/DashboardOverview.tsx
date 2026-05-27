@@ -15,7 +15,7 @@ export default function DashboardOverview() {
       const [homes, sub, stops] = await Promise.all([
         supabase.from("homes").select("id, label, street_address, city, pickup_day, active").eq("customer_id", user!.id),
         supabase.from("subscriptions").select("id, status, current_period_end").eq("customer_id", user!.id).order("created_at", { ascending: false }).limit(1).maybeSingle(),
-        supabase.from("v_route_with_stops").select("stop_id, completed_at, photo_url, action, street_address").not("photo_url", "is", null).order("completed_at", { ascending: false }).limit(3),
+        supabase.from("v_route_with_stops").select("stop_id, completed_at, photo_url, action, street_address").eq("customer_id", user!.id).not("photo_url", "is", null).order("completed_at", { ascending: false }).limit(3),
       ]);
       return {
         homes: homes.data || [],
