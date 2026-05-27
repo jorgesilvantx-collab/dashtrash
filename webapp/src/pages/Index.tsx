@@ -7,12 +7,16 @@ import { Coverage } from "@/components/site/Coverage";
 import { Testimonials } from "@/components/site/Testimonials";
 import { FAQ } from "@/components/site/FAQ";
 import { CTA } from "@/components/site/CTA";
+import { RollingBinsStrip } from "@/components/site/RollingBins";
 
 export default function Index() {
   return (
     <PageShell>
       <Hero />
       <HowItWorks />
+      <section aria-hidden className="bg-cream py-6 border-t border-border">
+        <RollingBinsStrip />
+      </section>
       <Services />
       <Pricing />
       <Coverage />

@@ -13,7 +13,6 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { supabase } from "@/lib/supabase";
 
 const schema = z.object({
   organization: z.string().min(2, "Required"),
@@ -46,24 +45,23 @@ export default function Partners() {
     setState("submitting");
     setErr(null);
     try {
-      await supabase.from("notifications_outbox").insert([
-        {
-          recipient: "sales@dashtrashtx.com",
-          subject: `New partner inquiry: ${values.organization} (${values.org_type})`,
-          body: [
-            `Organization: ${values.organization}`,
-            `Contact: ${values.full_name} — ${values.role}`,
-            `Email: ${values.email}`,
-            `Phone: ${values.phone}`,
-            `Type: ${values.org_type}`,
-            `Clients: ${values.clients_count}`,
-            `City: ${values.city}`,
-            `Notes: ${values.notes || "—"}`,
-          ].join("\n"),
-          template: "new_partner",
-          payload: { org_type: values.org_type },
-        },
-      ]);
+      const res = await fetch("/api/signup-partner", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          organization: values.organization,
+          full_name: values.full_name,
+          role: values.role,
+          email: values.email,
+          phone: values.phone,
+          org_type: values.org_type,
+          clients_count: values.clients_count,
+          city: values.city,
+          notes: values.notes,
+        }),
+      });
+      const body = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(body?.error?.message || `Submit failed (${res.status})`);
       setState("done");
     } catch (e) {
       setErr(e instanceof Error ? e.message : "Submit failed");
@@ -84,7 +82,7 @@ export default function Partners() {
               Our partnerships team typically responds within one business day. For anything urgent, call us at <a href="tel:+16823625847" className="text-ink font-semibold">(682) 362-5847</a>.
             </p>
             <p className="text-sm text-muted-foreground mb-8">
-              Confirmation sent to <span className="font-mono-eyebrow">sales@dashtrashtx.com</span>
+              Confirmation sent to <span className="font-mono-eyebrow">support@dashtrashtx.com</span>
             </p>
             <Button onClick={() => navigate("/")} size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-2xl px-7 font-semibold">
               Back to home
@@ -231,9 +229,9 @@ export default function Partners() {
                 <a href="tel:+16823625847" className="font-display font-extrabold text-2xl text-ink hover:text-primary transition-colors block">
                   (682) 362-5847
                 </a>
-                <a href="mailto:sales@dashtrashtx.com" className="text-sm text-foreground/70 hover:text-ink transition-colors flex items-center gap-1.5 mt-1.5">
+                <a href="mailto:support@dashtrashtx.com" className="text-sm text-foreground/70 hover:text-ink transition-colors flex items-center gap-1.5 mt-1.5">
                   <Mail className="h-3.5 w-3.5" />
-                  sales@dashtrashtx.com
+                  support@dashtrashtx.com
                 </a>
               </div>
             </div>

@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { ArrowRight, ShieldCheck, Camera, Clock, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { RouteCanvas } from "@/components/site/RouteCanvas";
+import { BinTrio } from "@/components/site/RollingBins";
 
 export function Hero() {
   return (
@@ -53,6 +54,10 @@ export function Hero() {
               <Trust icon={<ShieldCheck className="h-4 w-4 text-primary" />} label="Insured + background-checked" />
               <Trust icon={<Clock className="h-4 w-4 text-primary" />} label="Always on schedule" />
               <Trust icon={<Camera className="h-4 w-4 text-primary" />} label="Photo proof every visit" />
+            </div>
+
+            <div className="mt-10 hidden md:block">
+              <BinTrio />
             </div>
           </div>
 

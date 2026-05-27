@@ -3,14 +3,13 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useNavigate } from "react-router-dom";
-import { Loader2, CheckCircle2, MapPinned, AlertCircle } from "lucide-react";
+import { Loader2, CheckCircle2, MapPinned, AlertCircle, Recycle, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { supabase } from "@/lib/supabase";
-import { geocodeAddress, haversineMiles, clusterKeyFromLatLng } from "@/lib/geo";
+import { AddressAutocomplete, type AddressPick } from "@/components/forms/AddressAutocomplete";
+import { DayPicker } from "@/components/forms/DayPicker";
 
 const baseSchema = z.object({
   full_name: z.string().min(2, "Full name required"),
@@ -20,7 +19,6 @@ const baseSchema = z.object({
   city: z.string().min(2, "City required"),
   state: z.string().min(2, "State required").max(2),
   zip: z.string().min(5, "ZIP required"),
-  pickup_day: z.string().optional(),
   num_bins: z.coerce.number().int().min(1).max(20).default(1),
   num_properties: z.coerce.number().int().min(1).max(500).default(1),
   insurance_provider: z.string().optional(),
@@ -44,6 +42,9 @@ type ResultState =
 export function CustomerSignupForm({ customerType }: Props) {
   const navigate = useNavigate();
   const [result, setResult] = useState<ResultState>({ kind: "idle" });
+  const [trashDays, setTrashDays] = useState<string[]>([]);
+  const [recyclingDays, setRecyclingDays] = useState<string[]>([]);
+  const [coords, setCoords] = useState<{ lat: number; lng: number } | null>(null);
 
   const form = useForm<FormValues>({
     resolver: zodResolver(baseSchema),
@@ -55,7 +56,6 @@ export function CustomerSignupForm({ customerType }: Props) {
       city: "",
       state: "TX",
       zip: "",
-      pickup_day: "",
       num_bins: 1,
       num_properties: customerType === "enterprise" ? 5 : 1,
       insurance_provider: "",
@@ -64,81 +64,21 @@ export function CustomerSignupForm({ customerType }: Props) {
     },
   });
 
+  function onAddressPick(pick: AddressPick) {
+    form.setValue("street_address", pick.street, { shouldValidate: true });
+    if (pick.city) form.setValue("city", pick.city, { shouldValidate: true });
+    if (pick.state) form.setValue("state", pick.state, { shouldValidate: true });
+    if (pick.zip) form.setValue("zip", pick.zip, { shouldValidate: true });
+    setCoords({ lat: pick.lat, lng: pick.lng });
+  }
+
   async function onSubmit(values: FormValues) {
     setResult({ kind: "submitting" });
     try {
-      const fullAddress = `${values.street_address}, ${values.city}, ${values.state} ${values.zip}`;
-      const geo = await geocodeAddress(fullAddress);
-
-      const { data: areas, error: areaErr } = await supabase
-        .from("service_areas")
-        .select("center_lat, center_lng, radius_miles, cluster_threshold")
-        .eq("active", true);
-
-      if (areaErr) throw areaErr;
-
-      let inArea = false;
-      let minDistance = Infinity;
-      let threshold = 25;
-      if (geo && areas && areas.length) {
-        for (const a of areas) {
-          const dist = haversineMiles({ lat: geo.lat, lng: geo.lng }, { lat: a.center_lat, lng: a.center_lng });
-          if (dist < minDistance) minDistance = dist;
-          if (dist <= a.radius_miles) inArea = true;
-          threshold = a.cluster_threshold ?? threshold;
-        }
-      }
-
-      if (inArea || !geo) {
-        const { data, error } = await supabase
-          .from("customer_leads")
-          .insert({
-            full_name: values.full_name,
-            email: values.email,
-            phone: values.phone,
-            customer_type: customerType,
-            street_address: values.street_address,
-            city: values.city,
-            state: values.state.toUpperCase(),
-            zip: values.zip,
-            lat: geo?.lat ?? null,
-            lng: geo?.lng ?? null,
-            pickup_day: values.pickup_day || null,
-            num_bins: values.num_bins,
-            num_properties: values.num_properties,
-            insurance_provider: values.insurance_provider || null,
-            insurance_member_id: values.insurance_member_id || null,
-            notes: values.notes || null,
-            in_service_area: !!inArea,
-          })
-          .select("id")
-          .single();
-        if (error) throw error;
-
-        await supabase.from("notifications_outbox").insert({
-          recipient: "sales@dashtrashtx.com",
-          subject: `New ${customerType} signup: ${values.full_name}`,
-          body: `${values.full_name} (${values.email}, ${values.phone}) signed up for ${customerType} at ${fullAddress}. Pickup day: ${values.pickup_day || "n/a"}. Bins: ${values.num_bins}. Properties: ${values.num_properties}. Notes: ${values.notes || "none"}.`,
-          template: "new_customer_signup",
-          payload: { lead_id: data.id, customer_type: customerType, address: fullAddress },
-        });
-
-        setResult({ kind: "in_area", leadId: data.id });
-        return;
-      }
-
-      const clusterKey = clusterKeyFromLatLng(geo.lat, geo.lng);
-      const { count: existingCount } = await supabase
-        .from("waitlist")
-        .select("id", { count: "exact", head: true })
-        .eq("cluster_key", clusterKey)
-        .in("status", ["waiting", "cluster_ready"]);
-
-      const newCount = (existingCount ?? 0) + 1;
-
-      const { data, error } = await supabase
-        .from("waitlist")
-        .insert({
+      const res = await fetch("/api/signup-customer", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
           full_name: values.full_name,
           email: values.email,
           phone: values.phone,
@@ -147,26 +87,34 @@ export function CustomerSignupForm({ customerType }: Props) {
           city: values.city,
           state: values.state.toUpperCase(),
           zip: values.zip,
-          lat: geo.lat,
-          lng: geo.lng,
-          cluster_key: clusterKey,
-          cluster_size_at_signup: newCount,
-          status: newCount >= threshold ? "cluster_ready" : "waiting",
-          notes: values.notes || null,
-        })
-        .select("id")
-        .single();
-      if (error) throw error;
-
-      await supabase.from("notifications_outbox").insert({
-        recipient: "sales@dashtrashtx.com",
-        subject: newCount >= threshold ? `🚨 Cluster READY in ${clusterKey} (${newCount} signups)` : `New waitlist signup in ${clusterKey} (${newCount}/${threshold})`,
-        body: `${values.full_name} (${values.email}, ${values.phone}) joined the waitlist at ${fullAddress}. Cluster ${clusterKey} now has ${newCount}/${threshold} homes. Distance from nearest service area: ${minDistance.toFixed(1)} mi.`,
-        template: newCount >= threshold ? "cluster_ready" : "waitlist_signup",
-        payload: { waitlist_id: data.id, cluster_key: clusterKey, cluster_size: newCount, threshold },
+          pickup_days: trashDays,
+          recycling_days: recyclingDays,
+          num_bins: values.num_bins,
+          num_properties: values.num_properties,
+          insurance_provider: values.insurance_provider,
+          insurance_member_id: values.insurance_member_id,
+          notes: values.notes,
+          lat: coords?.lat,
+          lng: coords?.lng,
+        }),
       });
-
-      setResult({ kind: "waitlisted", waitlistId: data.id, clusterCount: newCount, threshold, distanceMiles: minDistance });
+      const body = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        throw new Error(body?.error?.message || `Submit failed (${res.status})`);
+      }
+      const data = body.data;
+      if (data.kind === "in_area") setResult({ kind: "in_area", leadId: data.leadId });
+      else if (data.kind === "waitlisted") {
+        setResult({
+          kind: "waitlisted",
+          waitlistId: data.waitlistId,
+          clusterCount: data.clusterCount,
+          threshold: data.threshold,
+          distanceMiles: data.distanceMiles,
+        });
+      } else {
+        throw new Error("Unexpected response");
+      }
     } catch (e) {
       const msg = e instanceof Error ? e.message : "Something went wrong. Please try again.";
       setResult({ kind: "error", message: msg });
@@ -271,7 +219,14 @@ export function CustomerSignupForm({ customerType }: Props) {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Street address</FormLabel>
-                <FormControl><Input placeholder="123 Main St" {...field} /></FormControl>
+                <FormControl>
+                  <AddressAutocomplete
+                    value={field.value}
+                    onChange={field.onChange}
+                    onPick={onAddressPick}
+                    placeholder="Start typing — we'll find it"
+                  />
+                </FormControl>
                 <FormMessage />
               </FormItem>
             )}
@@ -283,7 +238,7 @@ export function CustomerSignupForm({ customerType }: Props) {
               render={({ field }) => (
                 <FormItem className="sm:col-span-1">
                   <FormLabel>City</FormLabel>
-                  <FormControl><Input placeholder="Austin" {...field} /></FormControl>
+                  <FormControl><Input placeholder="Dallas" {...field} /></FormControl>
                   <FormMessage />
                 </FormItem>
               )}
@@ -305,7 +260,7 @@ export function CustomerSignupForm({ customerType }: Props) {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>ZIP</FormLabel>
-                  <FormControl><Input placeholder="78701" maxLength={10} {...field} /></FormControl>
+                  <FormControl><Input placeholder="75201" maxLength={10} {...field} /></FormControl>
                   <FormMessage />
                 </FormItem>
               )}
@@ -313,34 +268,40 @@ export function CustomerSignupForm({ customerType }: Props) {
           </div>
         </div>
 
+        <div className="space-y-5 p-5 rounded-2xl bg-cream border border-border">
+          <div>
+            <div className="flex items-center gap-2 mb-3">
+              <div className="h-7 w-7 rounded-lg bg-primary/15 flex items-center justify-center">
+                <Trash2 className="h-3.5 w-3.5 text-ink" strokeWidth={2} />
+              </div>
+              <div>
+                <div className="font-semibold text-ink leading-tight">Trash pickup day{customerType === "enterprise" ? " (typical)" : ""}</div>
+                <div className="text-xs text-muted-foreground mt-0.5">Pick one or more — city pickup days for your address</div>
+              </div>
+            </div>
+            <DayPicker value={trashDays} onChange={setTrashDays} accent="primary" />
+          </div>
+          <div className="border-t border-border pt-5">
+            <div className="flex items-center gap-2 mb-3">
+              <div className="h-7 w-7 rounded-lg bg-[#FF7F65]/15 flex items-center justify-center">
+                <Recycle className="h-3.5 w-3.5 text-ink" strokeWidth={2} />
+              </div>
+              <div>
+                <div className="font-semibold text-ink leading-tight">Recycling pickup day <span className="text-muted-foreground text-xs font-normal">(if different)</span></div>
+                <div className="text-xs text-muted-foreground mt-0.5">Some cities pick up recycling on a different day</div>
+              </div>
+            </div>
+            <DayPicker value={recyclingDays} onChange={setRecyclingDays} accent="coral" />
+          </div>
+        </div>
+
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <FormField
-            control={form.control}
-            name="pickup_day"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>City pickup day {customerType === "enterprise" ? "(typical)" : ""}</FormLabel>
-                <Select onValueChange={field.onChange} value={field.value}>
-                  <FormControl>
-                    <SelectTrigger><SelectValue placeholder="Select day" /></SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    {["Monday","Tuesday","Wednesday","Thursday","Friday"].map((d) => (
-                      <SelectItem key={d} value={d}>{d}</SelectItem>
-                    ))}
-                    <SelectItem value="not_sure">Not sure</SelectItem>
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
           {customerType === "enterprise" ? (
             <FormField
               control={form.control}
               name="num_properties"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="sm:col-span-2">
                   <FormLabel>How many properties / doors?</FormLabel>
                   <FormControl><Input type="number" min={1} {...field} /></FormControl>
                   <FormMessage />
@@ -352,7 +313,7 @@ export function CustomerSignupForm({ customerType }: Props) {
               control={form.control}
               name="num_bins"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="sm:col-span-2">
                   <FormLabel>How many bins?</FormLabel>
                   <FormControl><Input type="number" min={1} max={20} {...field} /></FormControl>
                   <FormMessage />

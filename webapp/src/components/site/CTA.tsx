@@ -75,8 +75,8 @@ export function CTA() {
                   <a href="tel:+16823625847" className="font-display font-bold text-background text-lg hover:text-primary transition-colors">
                     (682) 362-5847
                   </a>
-                  <a href="mailto:sales@dashtrashtx.com" className="block mt-1 text-sm text-background/70 hover:text-background transition-colors">
-                    sales@dashtrashtx.com
+                  <a href="mailto:support@dashtrashtx.com" className="block mt-1 text-sm text-background/70 hover:text-background transition-colors">
+                    support@dashtrashtx.com
                   </a>
                 </div>
               </div>

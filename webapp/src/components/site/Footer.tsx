@@ -22,10 +22,6 @@ export function Footer() {
                 <Phone className="h-4 w-4 text-primary" />
                 (682) 362-5847
               </a>
-              <a href="mailto:sales@dashtrashtx.com" className="flex items-center gap-2 text-foreground/80 hover:text-ink transition-colors">
-                <Mail className="h-4 w-4 text-muted-foreground" />
-                sales@dashtrashtx.com
-              </a>
               <a href="mailto:support@dashtrashtx.com" className="flex items-center gap-2 text-foreground/80 hover:text-ink transition-colors">
                 <Mail className="h-4 w-4 text-muted-foreground" />
                 support@dashtrashtx.com
@@ -49,8 +45,8 @@ export function Footer() {
           <FooterCol title="Account" links={[
             { to: "/login", label: "Customer sign in" },
             { to: "/login?role=driver", label: "Driver sign in" },
-            { to: "/login?role=admin", label: "Dispatch" },
-            { to: "mailto:sales@dashtrashtx.com", label: "sales@dashtrashtx.com", external: true },
+            { to: "/login?role=admin", label: "Owner / routes" },
+            { to: "mailto:support@dashtrashtx.com", label: "support@dashtrashtx.com", external: true },
           ]} />
         </div>
 

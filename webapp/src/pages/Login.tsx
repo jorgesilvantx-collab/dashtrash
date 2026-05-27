@@ -20,8 +20,8 @@ const labels: Record<string, { title: string; sub: string; redirect: string }> =
     redirect: "/driver",
   },
   admin: {
-    title: "Dispatch sign-in",
-    sub: "Manage subscriptions, drivers, routes, and the waitlist.",
+    title: "Owner / dispatch sign-in",
+    sub: "See every route, jump in if you have to run one, and manage drivers, subscriptions, and the waitlist.",
     redirect: "/admin",
   },
 };
