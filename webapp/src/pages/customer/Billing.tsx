@@ -1,6 +1,8 @@
-import { useQuery } from "@tanstack/react-query";
-import { CreditCard, ExternalLink, Loader2, AlertCircle } from "lucide-react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
+import { CreditCard, ExternalLink, Loader2, AlertCircle, XCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { supabase } from "@/lib/supabase";
 import { useAuth } from "@/lib/auth";
 
@@ -9,6 +11,26 @@ const STRIPE_CHECKOUT_URL = (import.meta.env.VITE_STRIPE_CHECKOUT_URL as string)
 
 export default function Billing() {
   const { user } = useAuth();
+  const qc = useQueryClient();
+  const [cancelErr, setCancelErr] = useState<string | null>(null);
+
+  const cancelSub = useMutation({
+    mutationFn: async () => {
+      const r = await fetch("/api/subscription-cancel", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ customer_id: user!.id }),
+      });
+      const j = await r.json();
+      if (!r.ok) throw new Error(j?.error?.message || "Could not cancel");
+      return j.data;
+    },
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["subscription", user?.id] });
+      setCancelErr(null);
+    },
+    onError: (e) => setCancelErr(e instanceof Error ? e.message : "Could not cancel"),
+  });
 
   const { data: subscription, isLoading } = useQuery({
     queryKey: ["subscription", user?.id],
@@ -74,15 +96,48 @@ export default function Billing() {
                 <StatusPill status={subscription.status} />
               </div>
             </div>
-            {hasActive && STRIPE_PORTAL_URL ? (
-              <Button asChild variant="outline" className="rounded-2xl border-foreground/15 bg-white text-ink hover:bg-secondary font-semibold">
-                <a href={STRIPE_PORTAL_URL} target="_blank" rel="noreferrer">
-                  Manage in Stripe
-                  <ExternalLink className="ml-2 h-4 w-4" />
-                </a>
-              </Button>
-            ) : null}
+            <div className="flex flex-wrap gap-2">
+              {hasActive && STRIPE_PORTAL_URL ? (
+                <Button asChild variant="outline" className="rounded-2xl border-foreground/15 bg-white text-ink hover:bg-secondary font-semibold">
+                  <a href={STRIPE_PORTAL_URL} target="_blank" rel="noreferrer">
+                    Manage in Stripe
+                    <ExternalLink className="ml-2 h-4 w-4" />
+                  </a>
+                </Button>
+              ) : null}
+              {hasActive && !subscription.cancel_at ? (
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <Button variant="outline" className="rounded-2xl border-destructive/30 bg-white text-destructive hover:bg-destructive/10 font-semibold">
+                      <XCircle className="h-4 w-4 mr-2" />
+                      Cancel
+                    </Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent className="rounded-3xl">
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>Cancel your subscription?</AlertDialogTitle>
+                      <AlertDialogDescription>
+                        Service continues through your current paid period ({fmt(subscription.current_period_end)}). You won't be charged again. You can resubscribe anytime.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel className="rounded-xl">Keep service</AlertDialogCancel>
+                      <AlertDialogAction onClick={() => cancelSub.mutate()} className="bg-destructive text-destructive-foreground hover:bg-destructive/90 rounded-xl">
+                        {cancelSub.isPending ? <><Loader2 className="h-4 w-4 mr-2 animate-spin" /> Canceling…</> : "Yes, cancel"}
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
+              ) : null}
+            </div>
           </div>
+
+          {cancelErr ? (
+            <div className="mb-4 flex items-start gap-2 p-3 rounded-xl bg-destructive/10 border border-destructive/40 text-destructive text-sm">
+              <AlertCircle className="h-4 w-4 mt-0.5 flex-shrink-0" />
+              <span>{cancelErr}</span>
+            </div>
+          ) : null}
 
           <div className="grid sm:grid-cols-2 gap-4 text-sm border-t border-border pt-5">
             <Row label="Current period start" value={fmt(subscription.current_period_start)} />

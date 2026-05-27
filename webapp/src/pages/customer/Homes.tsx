@@ -102,10 +102,25 @@ export default function Homes() {
     mutationFn: async (id: string) => {
       const { error } = await supabase.from("homes").delete().eq("id", id);
       if (error) throw error;
+
+      const { count } = await supabase
+        .from("homes")
+        .select("id", { count: "exact", head: true })
+        .eq("customer_id", user!.id)
+        .eq("active", true);
+
+      if ((count ?? 0) === 0) {
+        await fetch("/api/subscription-cancel", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ customer_id: user!.id, reason: "Customer removed all homes" }),
+        }).catch(() => {});
+      }
     },
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["homes", user?.id] });
       qc.invalidateQueries({ queryKey: ["customer-overview", user?.id] });
+      qc.invalidateQueries({ queryKey: ["subscription", user?.id] });
     },
   });
 

@@ -26,6 +26,7 @@ import Profile from "./pages/customer/Profile";
 import DriverLayout from "./pages/driver/DriverLayout";
 import DriverToday from "./pages/driver/DriverToday";
 import DriverHistory from "./pages/driver/DriverHistory";
+import DriverPayouts from "./pages/driver/DriverPayouts";
 
 import AdminLayout from "./pages/admin/AdminLayout";
 import AdminOverview from "./pages/admin/AdminOverview";
@@ -79,6 +80,7 @@ const App = () => (
             >
               <Route index element={<DriverToday />} />
               <Route path="history" element={<DriverHistory />} />
+              <Route path="payouts" element={<DriverPayouts />} />
               <Route path="profile" element={<Profile />} />
             </Route>
 
