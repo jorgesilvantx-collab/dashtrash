@@ -32,9 +32,11 @@ export default function AuthVerify() {
 
     (async () => {
       try {
+        // The token in the URL is a hashed_token from Supabase's admin
+        // generate_link endpoint, so verifyOtp must be called with token_hash
+        // (NOT token, which expects a 6-digit OTP code).
         const { error } = await supabase.auth.verifyOtp({
-          email,
-          token,
+          token_hash: token,
           type: "magiclink",
         });
         if (error) throw error;
