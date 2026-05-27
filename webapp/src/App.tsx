@@ -13,6 +13,7 @@ import Careers from "./pages/Careers";
 import Partners from "./pages/Partners";
 import Login from "./pages/Login";
 import AuthCallback from "./pages/AuthCallback";
+import AuthVerify from "./pages/AuthVerify";
 import NotFound from "./pages/NotFound";
 
 import CustomerLayout from "./pages/customer/CustomerLayout";
@@ -51,6 +52,7 @@ const App = () => (
             <Route path="/partners" element={<Partners />} />
             <Route path="/login" element={<Login />} />
             <Route path="/auth/callback" element={<AuthCallback />} />
+            <Route path="/auth/verify" element={<AuthVerify />} />
 
             <Route
               path="/dashboard"

@@ -5,7 +5,6 @@ import { PageShell } from "@/components/site/PageShell";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { supabase } from "@/lib/supabase";
 import { useAuth } from "@/lib/auth";
 
 const labels: Record<string, { title: string; sub: string; redirect: string }> = {
@@ -52,12 +51,15 @@ export default function Login() {
     setState("sending");
     setErr(null);
     try {
-      const redirectTo = `${window.location.origin}/auth/callback${next ? `?next=${encodeURIComponent(next)}` : ""}`;
-      const { error } = await supabase.auth.signInWithOtp({
-        email,
-        options: { emailRedirectTo: redirectTo },
+      const res = await fetch("/api/auth-magic", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, role, next: next || undefined }),
       });
-      if (error) throw error;
+      const json = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        throw new Error(json?.error?.message || "Could not send sign-in link.");
+      }
       setState("sent");
     } catch (e2) {
       setErr(e2 instanceof Error ? e2.message : "Could not send sign-in link.");
