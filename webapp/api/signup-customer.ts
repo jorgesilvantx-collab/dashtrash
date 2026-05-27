@@ -1,8 +1,8 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { admin } from "./_lib/supabase";
-import { sendMail, SUPPORT_EMAIL } from "./_lib/mail";
-import { geocodeAddress, haversineMiles, clusterKeyFromLatLng } from "./_lib/geo";
-import { fail, ok, readJson, setCors } from "./_lib/http";
+import { admin } from "./_lib/supabase.js";
+import { sendMail, SUPPORT_EMAIL } from "./_lib/mail.js";
+import { geocodeAddress, haversineMiles, clusterKeyFromLatLng } from "./_lib/geo.js";
+import { fail, ok, readJson, setCors } from "./_lib/http.js";
 
 type Body = {
   full_name: string;

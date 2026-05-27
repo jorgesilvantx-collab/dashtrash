@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { suggestAddresses } from "./_lib/geo";
-import { fail, ok, setCors } from "./_lib/http";
+import { suggestAddresses } from "./_lib/geo.js";
+import { fail, ok, setCors } from "./_lib/http.js";
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   setCors(res);

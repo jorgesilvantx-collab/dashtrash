@@ -1,7 +1,7 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { admin } from "./_lib/supabase";
-import { sendMail, SUPPORT_EMAIL } from "./_lib/mail";
-import { fail, ok, readJson, setCors } from "./_lib/http";
+import { admin } from "./_lib/supabase.js";
+import { sendMail, SUPPORT_EMAIL } from "./_lib/mail.js";
+import { fail, ok, readJson, setCors } from "./_lib/http.js";
 
 type Body = {
   full_name: string;
