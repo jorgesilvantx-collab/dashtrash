@@ -10,5 +10,24 @@ Allow: /
 User-agent: facebookexternalhit
 Allow: /
 
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
 User-agent: *
 Allow: /
+Disallow: /api/
+Disallow: /admin
+Disallow: /driver
+Disallow: /dashboard
+Disallow: /auth/
+
+Sitemap: https://dashtrashtx.com/sitemap.xml

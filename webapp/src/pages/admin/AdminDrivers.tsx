@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { Loader2 } from "lucide-react";
+import { Loader2, Banknote, CircleAlert } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 
 export default function AdminDrivers() {
@@ -8,12 +8,26 @@ export default function AdminDrivers() {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("drivers")
-        .select("profile_id, email, active, vehicle_make_model, has_truck_or_suv, pay_per_home_cents, pay_per_mile_cents, hire_date, profiles(full_name, phone)")
+        .select("profile_id, email, active, vehicle_make_model, has_truck_or_suv, pay_per_home_cents, pay_per_mile_cents, hire_date, stripe_account_id, stripe_payouts_enabled, stripe_details_submitted, profiles(full_name, phone)")
         .order("created_at", { ascending: false });
       if (error) throw error;
       return data || [];
     },
   });
+
+  const { data: earnings = [] } = useQuery({
+    queryKey: ["admin-driver-earnings"],
+    queryFn: async () => {
+      const { data, error } = await supabase.from("v_driver_earnings").select("*");
+      if (error) throw error;
+      return (data || []) as Array<{
+        driver_id: string; paid_cents: number; pending_cents: number;
+        routes_paid: number; homes_serviced: number;
+      }>;
+    },
+  });
+
+  const earningsByDriver = new Map(earnings.map((e) => [e.driver_id, e]));
 
   return (
     <div className="space-y-6">
@@ -36,14 +50,16 @@ export default function AdminDrivers() {
               <tr className="text-left">
                 <Th>Name</Th>
                 <Th>Vehicle</Th>
-                <Th>Pay</Th>
-                <Th>Hired</Th>
+                <Th>Pay rate</Th>
+                <Th>Earnings</Th>
+                <Th>Stripe</Th>
                 <Th>Status</Th>
               </tr>
             </thead>
             <tbody>
               {drivers.map((d) => {
                 const p = (d as { profiles?: { full_name?: string; phone?: string } }).profiles;
+                const e = earningsByDriver.get(d.profile_id);
                 return (
                   <tr key={d.profile_id} className="border-b border-border last:border-0 hover:bg-secondary/40">
                     <Td>
@@ -51,8 +67,16 @@ export default function AdminDrivers() {
                       <div className="text-xs text-muted-foreground">{d.email}</div>
                     </Td>
                     <Td className="text-foreground/80">{d.vehicle_make_model || "—"}</Td>
-                    <Td className="text-foreground/80">${(d.pay_per_home_cents / 100).toFixed(2)}/home · ${(d.pay_per_mile_cents / 100).toFixed(2)}/mi</Td>
-                    <Td className="text-muted-foreground">{d.hire_date || "—"}</Td>
+                    <Td className="text-foreground/80 whitespace-nowrap">${(d.pay_per_home_cents / 100).toFixed(2)}/home · ${(d.pay_per_mile_cents / 100).toFixed(2)}/mi</Td>
+                    <Td>
+                      {e ? (
+                        <div className="text-xs">
+                          <div className="text-ink font-medium">${(e.paid_cents / 100).toFixed(2)} paid</div>
+                          <div className="text-muted-foreground">{e.routes_paid} routes · {e.homes_serviced} homes</div>
+                        </div>
+                      ) : <span className="text-muted-foreground text-xs">—</span>}
+                    </Td>
+                    <Td>{stripePill(d)}</Td>
                     <Td>
                       {d.active
                         ? <span className="px-2 py-0.5 rounded-full bg-primary/20 text-ink font-mono-eyebrow text-[0.65rem]">Active</span>
@@ -71,3 +95,31 @@ export default function AdminDrivers() {
 
 const Th = ({ children }: { children: React.ReactNode }) => <th className="px-4 py-3 text-xs font-mono-eyebrow text-muted-foreground">{children}</th>;
 const Td = ({ children, className = "" }: { children: React.ReactNode; className?: string }) => <td className={`px-4 py-3 ${className}`}>{children}</td>;
+
+type DriverStripe = {
+  stripe_account_id?: string | null;
+  stripe_payouts_enabled?: boolean;
+  stripe_details_submitted?: boolean;
+};
+
+function stripePill(d: DriverStripe) {
+  if (!d.stripe_account_id) {
+    return (
+      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-secondary text-muted-foreground font-mono-eyebrow text-[0.65rem]">
+        <CircleAlert className="h-3 w-3" /> Not connected
+      </span>
+    );
+  }
+  if (d.stripe_payouts_enabled) {
+    return (
+      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-primary/20 text-ink font-mono-eyebrow text-[0.65rem]">
+        <Banknote className="h-3 w-3" /> Payouts on
+      </span>
+    );
+  }
+  return (
+    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-accent/20 text-ink font-mono-eyebrow text-[0.65rem]">
+      <Banknote className="h-3 w-3" /> {d.stripe_details_submitted ? "Review" : "Onboarding"}
+    </span>
+  );
+}
