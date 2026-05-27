@@ -45,7 +45,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       const html = `
 <!doctype html><html><body style="font-family:ui-sans-serif,system-ui,Arial;background:#f7f6f1;padding:40px 0;margin:0">
   <div style="max-width:520px;margin:0 auto;background:#fff;border:1px solid #e8e6dc;border-radius:24px;padding:36px 32px;color:#1a2030">
-    <div style="font-family:'Bebas Neue','Arial Narrow';font-size:28px;letter-spacing:0.05em">DASH TRASH</div>
+    <div style="font-family:'Bebas Neue','Arial Narrow';font-size:28px;letter-spacing:0.05em">DASHTRASHTX</div>
     <h1 style="font-size:24px;margin:18px 0 8px">Good news, ${first} — we're live in your neighborhood.</h1>
     <p style="color:#5b6473;line-height:1.6;margin:0 0 24px">Enough of your neighbors signed up that we can now route a driver to you every week. Lock in your spot before the route fills up.</p>
     <a href="${url}" style="display:inline-block;background:#5EE3E3;color:#1a2030;text-decoration:none;padding:14px 24px;border-radius:16px;font-weight:700">Start service — $63/mo</a>
@@ -54,8 +54,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 </body></html>`;
       const r2 = await sendMail({
         to: r.email,
-        subject: `DashTrash is now serving your area — claim your spot`,
-        text: `Hi ${first},\n\nWe're now servicing your neighborhood! Sign up here: ${url}\n\n— DashTrash`,
+        subject: `DashTrashTX is now serving your area — claim your spot`,
+        text: `Hi ${first},\n\nWe're now servicing your neighborhood! Sign up here: ${url}\n\n— DashTrashTX`,
         html,
       });
       if (r2.ok) sent++; else failed++;

@@ -160,7 +160,7 @@ export default function DriverPayouts() {
                 ? `Account ${s?.account_id?.slice(-8)} verified. Routes auto-pay on completion.`
                 : connected
                 ? "Stripe still needs a few details before they can release transfers."
-                : "Stripe handles all bank/tax info securely — DashTrash never touches it."}
+                : "Stripe handles all bank/tax info securely — DashTrashTX never touches it."}
             </p>
             {s?.requirements?.currently_due?.length ? (
               <div className="mt-3 text-xs text-muted-foreground">

@@ -35,7 +35,7 @@ export function PortalShell({
             <Link to="/" className="flex items-center gap-2.5">
               <LogoTile size={36} />
               <span className="font-display font-extrabold text-lg tracking-tight text-ink hidden sm:inline">
-                DashTrash<span className="text-primary">TX</span>
+                DashTrashTX<span className="text-primary">TX</span>
               </span>
             </Link>
             <div className="hidden md:block font-mono-eyebrow text-muted-foreground">{title}</div>

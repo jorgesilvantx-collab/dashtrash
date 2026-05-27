@@ -84,10 +84,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const html = `
 <!doctype html><html><body style="font-family:ui-sans-serif,system-ui,Arial,sans-serif;background:#f7f6f1;padding:40px 0;margin:0">
   <div style="max-width:520px;margin:0 auto;background:#fff;border:1px solid #e8e6dc;border-radius:24px;padding:36px 32px;color:#1a2030">
-    <div style="font-family:'Bebas Neue','Arial Narrow',sans-serif;font-size:28px;letter-spacing:0.05em;color:#1a2030;margin-bottom:8px">DASH TRASH</div>
+    <div style="font-family:'Bebas Neue','Arial Narrow',sans-serif;font-size:28px;letter-spacing:0.05em;color:#1a2030;margin-bottom:8px">DASHTRASHTX</div>
     <h1 style="font-size:22px;margin:18px 0 8px;color:#1a2030">Your sign-in link</h1>
-    <p style="color:#5b6473;line-height:1.6;margin:0 0 24px">Click the button below to sign in to your DashTrash account. The link expires in 1 hour.</p>
-    <a href="${verifyUrl}" style="display:inline-block;background:#5EE3E3;color:#1a2030;text-decoration:none;padding:14px 24px;border-radius:16px;font-weight:700;font-size:15px">Sign in to DashTrash</a>
+    <p style="color:#5b6473;line-height:1.6;margin:0 0 24px">Click the button below to sign in to your DashTrashTX account. The link expires in 1 hour.</p>
+    <a href="${verifyUrl}" style="display:inline-block;background:#5EE3E3;color:#1a2030;text-decoration:none;padding:14px 24px;border-radius:16px;font-weight:700;font-size:15px">Sign in to DashTrashTX</a>
     <p style="color:#8b94a3;font-size:13px;margin-top:28px">If the button doesn't work, copy this link:</p>
     <p style="color:#5b6473;font-size:12px;word-break:break-all;background:#f7f6f1;padding:12px;border-radius:10px">${verifyUrl}</p>
     <p style="color:#8b94a3;font-size:12px;margin-top:24px">Didn't request this? Ignore this email — no account changes will be made.</p>
@@ -96,7 +96,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     const send = await sendMail({
       to: email,
-      subject: "Your DashTrash sign-in link",
+      subject: "Your DashTrashTX sign-in link",
       text: `Click to sign in: ${verifyUrl}\n\nThis link expires in 1 hour. Didn't request this? Ignore this email.`,
       html,
     });

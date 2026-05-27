@@ -11,7 +11,7 @@ export function Footer() {
             <Link to="/" className="flex items-center gap-2.5">
               <LogoTile size={44} />
               <span className="font-display font-extrabold text-xl tracking-tight text-ink">
-                DashTrash<span className="text-primary">TX</span>
+                DashTrashTX<span className="text-primary">TX</span>
               </span>
             </Link>
             <p className="mt-5 max-w-sm text-[0.95rem] text-muted-foreground leading-relaxed">
@@ -52,7 +52,7 @@ export function Footer() {
 
         <div className="mt-14 pt-7 border-t border-border flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <div className="text-xs text-muted-foreground">
-            © {new Date().getFullYear()} DashTrash, LLC. All rights reserved.
+            © {new Date().getFullYear()} DashTrashTX, LLC. All rights reserved.
           </div>
           <div className="flex items-center gap-6 text-xs text-muted-foreground">
             <Link to="/legal/terms" className="hover:text-ink">Terms</Link>

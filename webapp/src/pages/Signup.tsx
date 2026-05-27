@@ -40,7 +40,7 @@ export default function Signup() {
             Create a free account to <span className="text-primary">start service</span>.
           </>
         }
-        description="DashTrash ties your subscription, address, pickup days, and photo proof to your account — so you only enter them once. Sign in or create a free account to start service."
+        description="DashTrashTX ties your subscription, address, pickup days, and photo proof to your account — so you only enter them once. Sign in or create a free account to start service."
       >
         <section className="relative bg-background overflow-hidden">
           <div className="absolute inset-x-0 top-0 h-[500px] bg-dots opacity-30 pointer-events-none [mask-image:radial-gradient(ellipse_at_top,black_20%,transparent_70%)]" />

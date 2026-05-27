@@ -24,7 +24,7 @@ export function Navbar() {
         <Link to="/" className="flex items-center gap-2.5 group">
           <LogoTile size={40} className="md:[width:44px] md:[height:44px] transition group-hover:rotate-[-3deg]" />
           <span className="font-display font-extrabold text-lg md:text-xl tracking-tight text-ink">
-            DashTrash<span className="text-primary">TX</span>
+            DashTrashTX<span className="text-primary">TX</span>
           </span>
         </Link>
 

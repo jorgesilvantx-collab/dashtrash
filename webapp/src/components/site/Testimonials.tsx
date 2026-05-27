@@ -14,7 +14,7 @@ const quotes = [
   {
     name: "Linda B.",
     role: "Arlington — daughter & caretaker",
-    body: "Mom's on long-term care insurance — DashTrash handled the billing. She hasn't lifted a bin since.",
+    body: "Mom's on long-term care insurance — DashTrashTX handled the billing. She hasn't lifted a bin since.",
   },
 ];
 

@@ -1,5 +1,5 @@
 const RESEND_API_KEY = process.env.RESEND_API_KEY || "";
-const MAIL_FROM = process.env.MAIL_FROM || "DashTrash <noreply@dashtrashtx.com>";
+const MAIL_FROM = process.env.MAIL_FROM || "DashTrashTX <noreply@dashtrashtx.com>";
 
 export async function sendMail(opts: {
   to: string | string[];

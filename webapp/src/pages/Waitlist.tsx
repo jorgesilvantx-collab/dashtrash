@@ -15,7 +15,7 @@ export default function Waitlist() {
             Create a free account to <span className="text-primary">check your address</span>.
           </>
         }
-        description="We tie every service-area check to your DashTrash account so we can pick up where you left off, save your pickup days, and notify you the moment we open service to your block."
+        description="We tie every service-area check to your DashTrashTX account so we can pick up where you left off, save your pickup days, and notify you the moment we open service to your block."
       >
         <section className="relative bg-background overflow-hidden">
           <div className="absolute inset-x-0 top-0 h-[500px] bg-dots opacity-30 pointer-events-none [mask-image:radial-gradient(ellipse_at_top,black_20%,transparent_70%)]" />
