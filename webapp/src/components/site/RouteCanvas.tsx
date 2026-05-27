@@ -92,7 +92,7 @@ export function RouteCanvas({ className }: { className?: string }) {
       </div>
 
       <div className="absolute top-5 right-5 text-right">
-        <div className="font-mono-eyebrow text-primary/80 leading-none mb-1">Tonight</div>
+        <div className="font-mono-eyebrow text-primary leading-none mb-1">Tonight</div>
         <div className="font-display font-extrabold text-background text-2xl leading-none">142 homes</div>
       </div>
 
@@ -122,7 +122,7 @@ function Stop({ cx, cy, delay, finished }: { cx: number; cy: number; delay: stri
 function Stat({ label, value }: { label: string; value: string }) {
   return (
     <div>
-      <div className="font-mono-eyebrow text-background/50 mb-1">{label}</div>
+      <div className="font-mono-eyebrow text-background/80 mb-1">{label}</div>
       <div className="font-display font-bold text-background text-sm">{value}</div>
     </div>
   );

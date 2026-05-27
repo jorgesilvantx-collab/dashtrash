@@ -5,6 +5,7 @@ import { PageShell } from "@/components/site/PageShell";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/lib/supabase";
 import { useAuth } from "@/lib/auth";
+import { safeNext } from "@/components/auth/AuthGate";
 
 export default function AuthVerify() {
   const [params] = useSearchParams();
@@ -45,7 +46,7 @@ export default function AuthVerify() {
   useEffect(() => {
     if (status !== "ok" || loading) return;
     if (!session) return;
-    const next = params.get("next");
+    const next = safeNext(params.get("next"));
     if (next) {
       navigate(next, { replace: true });
       return;

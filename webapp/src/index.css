@@ -150,6 +150,33 @@
   0%, 100% { transform: translateY(0) rotate(-2deg); }
   50%      { transform: translateY(-3px) rotate(2deg); }
 }
+@keyframes bin-hop {
+  0%   { transform: translateX(-10%) translateY(0) rotate(-2deg); }
+  10%  { transform: translateX(0%) translateY(-22px) rotate(-6deg); }
+  20%  { transform: translateX(10%) translateY(0) rotate(0deg); }
+  30%  { transform: translateX(20%) translateY(-22px) rotate(6deg); }
+  40%  { transform: translateX(30%) translateY(0) rotate(0deg); }
+  50%  { transform: translateX(40%) translateY(-22px) rotate(-6deg); }
+  60%  { transform: translateX(50%) translateY(0) rotate(0deg); }
+  70%  { transform: translateX(60%) translateY(-22px) rotate(6deg); }
+  80%  { transform: translateX(70%) translateY(0) rotate(0deg); }
+  90%  { transform: translateX(85%) translateY(-22px) rotate(-6deg); }
+  100% { transform: translateX(110%) translateY(0) rotate(0deg); }
+}
+@keyframes grabber-arm {
+  0%, 100% { transform: translateY(-40px); }
+  20%      { transform: translateY(10px); }
+  40%      { transform: translateY(-30px); }
+  60%      { transform: translateY(-30px); }
+  80%      { transform: translateY(10px); }
+}
+@keyframes bin-lift {
+  0%, 100% { transform: translateY(0); }
+  20%      { transform: translateY(0); }
+  40%      { transform: translateY(-30px); }
+  60%      { transform: translateY(-30px); }
+  80%      { transform: translateY(0); }
+}
 .animate-fade-up { animation: fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both; }
 .animate-fade-in { animation: fade-in 0.6s ease-out both; }
 .animate-float   { animation: float 6s ease-in-out infinite; }
@@ -160,6 +187,9 @@
 .animate-wheel-spin { animation: wheel-spin 0.6s linear infinite; transform-origin: center; transform-box: fill-box; }
 .animate-lid-flap { animation: lid-flap 3.4s ease-in-out infinite; transform-origin: bottom right; transform-box: fill-box; }
 .animate-bin-bob { animation: bin-bob 3s ease-in-out infinite; }
+.animate-bin-hop { animation: bin-hop 6s cubic-bezier(0.42, 0, 0.58, 1) infinite; }
+.animate-grabber-arm { animation: grabber-arm 4s cubic-bezier(0.42, 0, 0.58, 1) infinite; }
+.animate-bin-lift { animation: bin-lift 4s cubic-bezier(0.42, 0, 0.58, 1) infinite; }
 .delay-75  { animation-delay: 0.075s; }
 .delay-150 { animation-delay: 0.15s; }
 .delay-225 { animation-delay: 0.225s; }

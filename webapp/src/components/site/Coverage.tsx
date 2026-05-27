@@ -95,13 +95,13 @@ export function Coverage() {
               </svg>
 
               {/* Cluster status overlay */}
-              <div className="absolute bottom-5 left-5 right-5 p-5 rounded-2xl bg-background/10 backdrop-blur-xl border border-background/15">
-                <div className="font-mono-eyebrow text-primary/80">Cluster status — your zip</div>
+              <div className="absolute bottom-5 left-5 right-5 p-5 rounded-2xl bg-background/15 backdrop-blur-xl border border-background/25">
+                <div className="font-mono-eyebrow text-primary">Cluster status — your zip</div>
                 <div className="font-display font-extrabold text-3xl text-background mt-1.5">17 / 25 homes</div>
-                <div className="mt-3 h-2 rounded-full bg-background/10 overflow-hidden">
+                <div className="mt-3 h-2 rounded-full bg-background/20 overflow-hidden">
                   <div className="h-full w-[68%] bg-primary rounded-full" />
                 </div>
-                <div className="text-xs text-background/70 mt-2.5">8 more sign-ups and your route opens</div>
+                <div className="text-xs text-background/90 mt-2.5">8 more sign-ups and your route opens</div>
               </div>
 
               {/* Top legend */}

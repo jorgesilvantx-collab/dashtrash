@@ -7,7 +7,7 @@ import { Coverage } from "@/components/site/Coverage";
 import { Testimonials } from "@/components/site/Testimonials";
 import { FAQ } from "@/components/site/FAQ";
 import { CTA } from "@/components/site/CTA";
-import { RollingBinsStrip } from "@/components/site/RollingBins";
+import { RollingBinsStrip, BinParade, BinHop } from "@/components/site/RollingBins";
 
 export default function Index() {
   return (
@@ -15,11 +15,17 @@ export default function Index() {
       <Hero />
       <HowItWorks />
       <section aria-hidden className="bg-cream py-6 border-t border-border">
-        <RollingBinsStrip />
+        <BinHop />
       </section>
       <Services />
+      <section aria-hidden className="bg-background py-6 border-y border-border">
+        <BinParade />
+      </section>
       <Pricing />
       <Coverage />
+      <section aria-hidden className="bg-cream py-6 border-t border-border">
+        <RollingBinsStrip />
+      </section>
       <Testimonials />
       <FAQ />
       <CTA />

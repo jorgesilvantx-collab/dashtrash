@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { Loader2 } from "lucide-react";
 import { useAuth } from "@/lib/auth";
+import { safeNext } from "@/components/auth/AuthGate";
 
 export default function AuthCallback() {
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ export default function AuthCallback() {
       navigate("/login", { replace: true });
       return;
     }
-    const next = params.get("next");
+    const next = safeNext(params.get("next"));
     if (next) {
       navigate(next, { replace: true });
       return;

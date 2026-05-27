@@ -2,6 +2,7 @@ import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { admin } from "./_lib/supabase.js";
 import { sendMail, SUPPORT_EMAIL } from "./_lib/mail.js";
 import { fail, ok, readJson, setCors } from "./_lib/http.js";
+import { ownerNotification, driverApplied } from "./_lib/email-templates.js";
 
 type Body = {
   full_name: string;
@@ -52,33 +53,55 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       .single();
     if (error) throw error;
 
-    const subject = `New driver application: ${body.full_name}`;
-    const text = [
-      `${body.full_name} (${body.email}, ${body.phone})`,
-      `Location: ${body.city}, ${body.state}`,
-      `Vehicle: ${body.vehicle_make_model || "n/a"}`,
-      `Truck/SUV: ${body.has_truck_or_suv ? "yes" : "no"}`,
-      `Years driving: ${body.years_driving ?? 1}`,
-      `License: ${body.has_license ? "yes" : "no"}`,
-      `Insurance: ${body.has_insurance ? "yes" : "no"}`,
-      `Availability: ${body.availability}`,
-      body.preferred_routes?.length ? `Preferred routes: ${body.preferred_routes.join(", ")}` : null,
-      body.why_join ? `Why: ${body.why_join}` : null,
-    ].filter(Boolean).join("\n");
+    const ownerPayload: Record<string, unknown> = {
+      full_name: body.full_name,
+      email: body.email,
+      phone: body.phone,
+      city: body.city,
+      state: body.state,
+      vehicle_make_model: body.vehicle_make_model,
+      has_truck_or_suv: body.has_truck_or_suv,
+      years_driving: body.years_driving ?? 1,
+      availability: body.availability,
+      has_license: body.has_license,
+      has_insurance: body.has_insurance,
+      preferred_routes: body.preferred_routes,
+      why_join: body.why_join,
+    };
+    const ownerTpl = ownerNotification({
+      formType: "driver",
+      payload: ownerPayload,
+      leadId: data.id,
+      subjectExtra: body.full_name,
+      supportEmail: SUPPORT_EMAIL,
+      replyToHint: body.email,
+    });
 
     await admin.from("notifications_outbox").insert({
       recipient: SUPPORT_EMAIL,
-      subject,
-      body: text,
+      subject: ownerTpl.subject,
+      body: ownerTpl.text,
       template: "new_application",
       payload: { application_id: data.id, position: "driver" },
     });
 
-    await sendMail({ to: SUPPORT_EMAIL, subject, text, replyTo: body.email });
+    await sendMail({
+      to: SUPPORT_EMAIL,
+      subject: ownerTpl.subject,
+      html: ownerTpl.html,
+      text: ownerTpl.text,
+      replyTo: body.email,
+    });
+
+    const driverTpl = driverApplied({
+      firstName: body.full_name,
+      supportEmail: SUPPORT_EMAIL,
+    });
     await sendMail({
       to: body.email,
-      subject: "We got your DashTrashTX application",
-      text: `Hi ${body.full_name.split(" ")[0]},\n\nThanks for applying to drive with DashTrashTX! We review every application within 48 hours. If you're a fit, we'll reach out to schedule a quick call and a ride-along.\n\nQuestions? Reply to this email or call (682) 362-5847.\n\n— The DashTrashTX team`,
+      subject: driverTpl.subject,
+      html: driverTpl.html,
+      text: driverTpl.text,
     });
 
     return ok(res, { kind: "submitted", applicationId: data.id });

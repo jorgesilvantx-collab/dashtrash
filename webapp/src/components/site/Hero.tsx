@@ -72,9 +72,9 @@ export function Hero() {
 
               {/* Floating stat card */}
               <div className="absolute -top-6 -right-2 md:-right-8 p-4 rounded-2xl bg-ink text-background shadow-[0_20px_40px_-15px_rgba(15,23,34,0.5)] rotate-[3deg] hidden sm:block border border-background/10">
-                <div className="font-mono-eyebrow text-primary/80 mb-1">This week</div>
+                <div className="font-mono-eyebrow text-primary mb-1">This week</div>
                 <div className="font-display font-extrabold text-3xl leading-none">2,400</div>
-                <div className="text-xs text-background/60 mt-1">bins handled</div>
+                <div className="text-xs text-background/85 mt-1">bins handled</div>
               </div>
 
               {/* Floating rating card */}
@@ -98,17 +98,17 @@ export function Hero() {
         {/* Bottom social-proof bar */}
         <div className="mt-20 md:mt-28 animate-fade-up delay-225">
           <div className="font-mono-eyebrow text-muted-foreground text-center mb-6">Trusted by neighbors across</div>
-          <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-3 font-display font-bold text-xl md:text-2xl text-foreground/30">
+          <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-3 font-display font-bold text-xl md:text-2xl text-foreground/55">
             <span>Dallas</span>
-            <span className="text-muted-foreground/40">·</span>
+            <span className="text-muted-foreground/70">·</span>
             <span>Plano</span>
-            <span className="text-muted-foreground/40">·</span>
+            <span className="text-muted-foreground/70">·</span>
             <span>Frisco</span>
-            <span className="text-muted-foreground/40">·</span>
+            <span className="text-muted-foreground/70">·</span>
             <span>Arlington</span>
-            <span className="text-muted-foreground/40">·</span>
+            <span className="text-muted-foreground/70">·</span>
             <span>McKinney</span>
-            <span className="text-muted-foreground/40">·</span>
+            <span className="text-muted-foreground/70">·</span>
             <span>Fort Worth</span>
           </div>
         </div>

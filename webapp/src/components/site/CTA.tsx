@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { ArrowRight, ShieldCheck, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { BinPickup } from "@/components/site/RollingBins";
 
 export function CTA() {
   return (
@@ -26,13 +27,13 @@ export function CTA() {
 
           <div className="relative grid lg:grid-cols-12 gap-10 items-center">
             <div className="lg:col-span-8">
-              <div className="font-mono-eyebrow text-primary/80 mb-4">Stop touching trash</div>
+              <div className="font-mono-eyebrow text-primary mb-4">Stop touching trash</div>
               <h2 className="font-display font-extrabold text-4xl md:text-6xl lg:text-7xl leading-[1.0] tracking-[-0.025em] text-background">
                 Your last week
                 <br />
                 <span className="text-primary">rolling bins.</span>
               </h2>
-              <p className="mt-6 text-lg text-background/70 max-w-xl">
+              <p className="mt-6 text-lg text-background/90 max-w-xl">
                 60-second signup. First service this week. Cancel anytime — but you won't.
               </p>
               <div className="mt-9 flex flex-col sm:flex-row gap-3">
@@ -49,7 +50,7 @@ export function CTA() {
                   </a>
                 </Button>
               </div>
-              <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-background/60">
+              <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-background/85">
                 <span className="flex items-center gap-2">
                   <ShieldCheck className="h-4 w-4 text-primary" />
                   Insured + background-checked
@@ -62,22 +63,25 @@ export function CTA() {
             </div>
 
             <div className="lg:col-span-4">
-              <div className="rounded-3xl bg-background/10 backdrop-blur-md border border-background/15 p-6">
-                <div className="font-mono-eyebrow text-primary/80">This week alone</div>
+              <div className="rounded-3xl bg-background/15 backdrop-blur-md border border-background/25 p-6">
+                <div className="font-mono-eyebrow text-primary">This week alone</div>
                 <div className="mt-3 grid grid-cols-2 gap-4">
                   <Mini value="500+" label="Homes served" />
                   <Mini value="99.6%" label="On-time rate" />
                   <Mini value="2,400" label="Bins handled" />
                   <Mini value="4.9★" label="Avg rating" />
                 </div>
-                <div className="mt-5 pt-5 border-t border-background/10">
-                  <div className="font-mono-eyebrow text-primary/80 mb-2">Talk to a human</div>
+                <div className="mt-5 pt-5 border-t border-background/20">
+                  <div className="font-mono-eyebrow text-primary mb-2">Talk to a human</div>
                   <a href="tel:+16823625847" className="font-display font-bold text-background text-lg hover:text-primary transition-colors">
                     (682) 362-5847
                   </a>
-                  <a href="mailto:support@dashtrashtx.com" className="block mt-1 text-sm text-background/70 hover:text-background transition-colors">
+                  <a href="mailto:support@dashtrashtx.com" className="block mt-1 text-sm text-background/90 hover:text-background transition-colors">
                     support@dashtrashtx.com
                   </a>
+                </div>
+                <div className="mt-5 pt-5 border-t border-background/20 flex items-center justify-center">
+                  <BinPickup />
                 </div>
               </div>
             </div>
@@ -92,7 +96,7 @@ function Mini({ value, label }: { value: string; label: string }) {
   return (
     <div>
       <div className="font-display font-extrabold text-2xl md:text-3xl text-background leading-none">{value}</div>
-      <div className="font-mono-eyebrow text-background/50 mt-1.5">{label}</div>
+      <div className="font-mono-eyebrow text-background/80 mt-1.5">{label}</div>
     </div>
   );
 }

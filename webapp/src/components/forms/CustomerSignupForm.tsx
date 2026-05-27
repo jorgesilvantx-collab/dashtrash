@@ -30,6 +30,8 @@ type FormValues = z.infer<typeof baseSchema>;
 
 type Props = {
   customerType: "residential" | "enterprise" | "elderly";
+  defaultEmail?: string;
+  userId?: string;
 };
 
 type ResultState =
@@ -39,7 +41,7 @@ type ResultState =
   | { kind: "waitlisted"; waitlistId: string; clusterCount: number; threshold: number; distanceMiles: number }
   | { kind: "error"; message: string };
 
-export function CustomerSignupForm({ customerType }: Props) {
+export function CustomerSignupForm({ customerType, defaultEmail, userId }: Props) {
   const navigate = useNavigate();
   const [result, setResult] = useState<ResultState>({ kind: "idle" });
   const [trashDays, setTrashDays] = useState<string[]>([]);
@@ -50,7 +52,7 @@ export function CustomerSignupForm({ customerType }: Props) {
     resolver: zodResolver(baseSchema),
     defaultValues: {
       full_name: "",
-      email: "",
+      email: defaultEmail ?? "",
       phone: "",
       street_address: "",
       city: "",
@@ -96,6 +98,7 @@ export function CustomerSignupForm({ customerType }: Props) {
           notes: values.notes,
           lat: coords?.lat,
           lng: coords?.lng,
+          user_id: userId,
         }),
       });
       const body = await res.json().catch(() => ({}));

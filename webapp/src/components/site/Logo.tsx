@@ -1,10 +1,50 @@
 import { cn } from "@/lib/utils";
 
 /**
- * Inline SVG D-monogram matching the DashTrashTX brand mark:
- * outlined italic-leaning D with double cyan border and stylized dash strokes inside.
+ * DashTrashTX brand mark.
+ *
+ * Friendly, trustworthy monogram: a confident geometric "D" shaped like a
+ * trash-bin silhouette, with a single dash swoosh cutting across the curve.
+ * Two-tone — cyan + ink — no overlapping strokes, reads cleanly at 24px.
  */
-export function Logo({ className, size = 40 }: { className?: string; size?: number; dark?: boolean }) {
+
+type LogoProps = {
+  className?: string;
+  size?: number;
+  /** When true, mark is rendered light-on-dark (cyan + cream). When false (default), ink + cyan on transparent. */
+  onDark?: boolean;
+};
+
+function Mark({ onDark = false }: { onDark?: boolean }) {
+  const stroke = onDark ? "#FAFAF7" : "#0F1722";
+  const accent = "#5EE3E3";
+  return (
+    <>
+      {/* Bin body shaped like a D — slight inward taper toward the base */}
+      <path
+        d="M22 18 H44 C58 18 66 27 66 40 C66 53 58 62 44 62 H22 Z"
+        fill={accent}
+        stroke={stroke}
+        strokeWidth="4"
+        strokeLinejoin="round"
+      />
+      {/* Lid bar across the top — bin handle / lid */}
+      <rect x="14" y="12" width="50" height="6" rx="3" fill={stroke} />
+      {/* Lid knob */}
+      <rect x="35" y="6" width="10" height="6" rx="2" fill={stroke} />
+      {/* Dash swoosh — single confident motion line across the D belly */}
+      <path
+        d="M28 40 H56"
+        stroke={stroke}
+        strokeWidth="5"
+        strokeLinecap="round"
+      />
+    </>
+  );
+}
+
+/** Default mark — ink + cyan on light surfaces. */
+export function Logo({ className, size = 40 }: LogoProps) {
   return (
     <svg
       width={size}
@@ -16,33 +56,13 @@ export function Logo({ className, size = 40 }: { className?: string; size?: numb
       aria-label="DashTrashTX"
       role="img"
     >
-      {/* D outer outline (italic-leaning, double border) */}
-      <path
-        d="M16 10 H46 C60 10 70 21 70 36 C70 51 60 64 46 64 H16 L24 10 Z"
-        stroke="#5EE3E3"
-        strokeWidth="4"
-        strokeLinejoin="round"
-        fill="none"
-      />
-      <path
-        d="M22 16 H45 C56.6 16 64 25.4 64 36 C64 47 56.6 58 45 58 H22 L28 16 Z"
-        stroke="#FFFFFF"
-        strokeWidth="2"
-        strokeLinejoin="round"
-        fill="none"
-      />
-      {/* Three diagonal dashes through the D belly */}
-      <g transform="rotate(-18 40 38)">
-        <rect x="20" y="22" width="34" height="4" rx="1" fill="#5EE3E3" />
-        <rect x="20" y="34" width="34" height="4" rx="1" fill="#5EE3E3" />
-        <rect x="20" y="46" width="34" height="4" rx="1" fill="#5EE3E3" />
-      </g>
+      <Mark onDark={false} />
     </svg>
   );
 }
 
-/** Square dark tile — Navbar/PortalShell brand icon. */
-export function LogoTile({ className, size = 40 }: { className?: string; size?: number }) {
+/** Dark rounded tile — used in navbar / brand chips. */
+export function LogoTile({ className, size = 40 }: LogoProps) {
   return (
     <svg
       width={size}
@@ -56,57 +76,25 @@ export function LogoTile({ className, size = 40 }: { className?: string; size?: 
     >
       <rect x="0" y="0" width="80" height="80" rx="18" fill="#0F1722" />
       <rect x="0.5" y="0.5" width="79" height="79" rx="17.5" stroke="#5EE3E3" strokeOpacity="0.25" />
-      <g transform="translate(4 4) scale(0.9)">
-        <path
-          d="M16 10 H46 C60 10 70 21 70 36 C70 51 60 64 46 64 H16 L24 10 Z"
-          stroke="#5EE3E3"
-          strokeWidth="4"
-          strokeLinejoin="round"
-          fill="none"
-        />
-        <path
-          d="M22 16 H45 C56.6 16 64 25.4 64 36 C64 47 56.6 58 45 58 H22 L28 16 Z"
-          stroke="#FFFFFF"
-          strokeWidth="2"
-          strokeLinejoin="round"
-          fill="none"
-        />
-        <g transform="rotate(-18 40 38)">
-          <rect x="20" y="22" width="34" height="4" rx="1" fill="#5EE3E3" />
-          <rect x="20" y="34" width="34" height="4" rx="1" fill="#5EE3E3" />
-          <rect x="20" y="46" width="34" height="4" rx="1" fill="#5EE3E3" />
-        </g>
-      </g>
+      <Mark onDark />
     </svg>
   );
 }
 
 /**
- * Photographic logo — the user's actual raster mark on a dark background.
- * Uses mix-blend-mode: lighten so the black bg disappears over light surfaces.
- * Pass `darkSurface` when the surrounding bg is already dark to skip the blend.
+ * LogoMark — kept as an alias of LogoTile so old call sites (Hero.tsx) still
+ * work, but rendering is the new clean monogram on a dark tile (no raster).
  */
 export function LogoMark({
   className,
   size = 120,
-  darkSurface = false,
 }: {
   className?: string;
   size?: number;
+  /** Legacy prop — preserved so existing callers don't break. */
   darkSurface?: boolean;
 }) {
-  return (
-    <img
-      src="/logo-dashtrash.jpg"
-      alt="DashTrashTX"
-      width={size}
-      height={Math.round(size * 0.78)}
-      style={{ width: size, height: "auto", mixBlendMode: darkSurface ? "normal" : "lighten" }}
-      className={cn("select-none pointer-events-none", className)}
-      loading="eager"
-      decoding="async"
-    />
-  );
+  return <LogoTile className={className} size={size} />;
 }
 
 export function Wordmark({ className }: { className?: string }) {

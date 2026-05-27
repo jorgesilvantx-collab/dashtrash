@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useAuth } from "@/lib/auth";
+import { safeNext } from "@/components/auth/AuthGate";
 
 const labels: Record<string, { title: string; sub: string; redirect: string }> = {
   customer: {
@@ -32,7 +33,7 @@ export default function Login() {
 
   const role = params.get("role") ?? "customer";
   const label = labels[role] ?? labels.customer;
-  const next = params.get("next");
+  const next = safeNext(params.get("next"));
 
   const [email, setEmail] = useState("");
   const [state, setState] = useState<"idle" | "sending" | "sent" | "error">("idle");
